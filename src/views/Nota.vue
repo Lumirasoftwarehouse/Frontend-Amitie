@@ -126,17 +126,10 @@ const toggleSidebar = () => {
           <form @submit.prevent="createNote">
             <div class="row">
               <div class="col-sm-4">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Tempat"
-                />
+                <input type="text" class="form-control" placeholder="Tempat" />
               </div>
               <div class="col-sm-4">
-                <input
-                  type="date"
-                  class="form-control"
-                />
+                <input type="date" class="form-control" />
               </div>
               <div class="col-sm-4">
                 <input
@@ -275,7 +268,9 @@ const toggleSidebar = () => {
                       type="number"
                       class="form-control"
                       placeholder="Total"
-                      :value="newNota.jasa + newNota.lain_lain + newNota.stnk_resmi"
+                      :value="
+                        newNota.jasa + newNota.lain_lain + newNota.stnk_resmi
+                      "
                     />
                   </div>
                 </div>
@@ -473,7 +468,11 @@ const toggleSidebar = () => {
                     <input
                       type="number"
                       class="form-control"
-:value="Number(detailNota.jasa) + Number(detailNota.lain_lain) + Number(detailNota.stnk_resmi)"
+                      :value="
+                        Number(detailNota.jasa) +
+                        Number(detailNota.lain_lain) +
+                        Number(detailNota.stnk_resmi)
+                      "
                       disabled
                     />
                   </div>
@@ -499,6 +498,209 @@ const toggleSidebar = () => {
     </div>
   </div>
   <!-- end modal detail -->
+
+    <!-- modal update -->
+  <div
+    class="modal fade"
+    id="modalUpdate"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalUpdateLabel"
+    aria-hidden="true"
+    ref="modalUpdateRef"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalUpdateLabel">Modal Update Nota</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form @submit.prevent="createNote">
+            <div class="row">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Tempat, DD MONTH YYYY"
+                  disabled
+                />
+              </div>
+              <div class="col-sm-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="nama customer"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <span class="text-center h4 fw-bold text-dark">RECEIPT</span>
+            </div>
+
+            <div class="row">
+              <!-- Kolom Kiri: Proses, Atas Nama, Kendaraan, No Polisi, Keterangan -->
+              <div class="col-md-6 col-12 mb-3 border border-dark p-3">
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label">Proses:</label>
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="detailNota.proses"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label"
+                    >Atas Nama:</label
+                  >
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="detailNota.atas_nama"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label"
+                    >Kendaraan:</label
+                  >
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="detailNota.kendaraan"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label"
+                    >No Polisi:</label
+                  >
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="detailNota.no_polisi"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label"
+                    >Keterangan:</label
+                  >
+                  <div class="col-md-8 col-12">
+                    <textarea
+                      class="form-control"
+                      v-model="detailNota.keterangan"
+                      disabled
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Kolom Kanan: Resmi STNK, Jasa, Lain-lain, Total -->
+              <div class="col-md-6 col-12 mb-3 border border-dark p-3">
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label"
+                    >Resmi STNK (Rp.):</label
+                  >
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="number"
+                      class="form-control"
+                      v-model="detailNota.stnk_resmi"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label"
+                    >Jasa (Rp.):</label
+                  >
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="number"
+                      class="form-control"
+                      v-model="detailNota.jasa"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label"
+                    >Lain-lain (Rp.):</label
+                  >
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="number"
+                      class="form-control"
+                      v-model="detailNota.lain_lain"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label"
+                    >Total (Rp.):</label
+                  >
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="number"
+                      class="form-control"
+                      :value="
+                        Number(detailNota.jasa) +
+                        Number(detailNota.lain_lain) +
+                        Number(detailNota.stnk_resmi)
+                      "
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- test -->
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end modal update -->
 </template>
 <script>
 import axios from "axios";
@@ -521,20 +723,20 @@ export default {
         jasa: "",
         lain_lain: "",
       },
-      detailNota:[],
+      detailNota: [],
       user_id: "",
       ready: false,
       remainingTime: "Loading",
     };
   },
   methods: {
-    setData(nota){
+    setData(nota) {
       this.detailNota = nota;
     },
     async createNote() {
       try {
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/nota/create`,
+          `${import.meta.env.VITE_API_ENDPOINT}/nota/create`,
           this.newNota,
           {
             headers: {
@@ -570,7 +772,7 @@ export default {
       try {
         this.ready = false;
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/nota/list`,
+          `${import.meta.env.VITE_API_ENDPOINT}/nota/list`,
           {
             headers: {
               Authorization: "Bearer " + sessionStorage.getItem("token"),
