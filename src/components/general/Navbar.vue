@@ -31,12 +31,12 @@
           <span class="mr-2 d-none d-lg-inline text-white small">{{
             this.name
           }}</span>
-          <!-- <img class="img-profile rounded-circle" src="/img/nobi.jpg" /> -->
-          <img
+          <img class="img-profile rounded-circle" src="/img/nobi.jpg" />
+          <!-- <img
             :src="'https://backend-sblf.lumirainternational.com/storage/profile/' + gambar"
             alt=" gambarprofile"
             class="img-profile rounded-circle"
-          />
+          /> -->
         </a>
         <!-- Dropdown - User Information -->
         <div
