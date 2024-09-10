@@ -59,21 +59,6 @@ import ChatMe from "../components/ChatMe.vue";
                         >
                       </div>
                     </div>
-
-                    <div class="confirmHuman" v-if="captchaValidate === false">
-                      <img
-                        width="48"
-                        height="48"
-                        src="https://img.icons8.com/fluency/48/checked.png"
-                        alt="checked"
-                      />
-                      You are human
-                    </div>
-
-                    <Captcha
-                      @emitCaptcha="captchaCode"
-                      v-if="captchaValidate === true"
-                    />
                     <button
                       type="submit"
                       class="btn btn-primary btn-user btn-block mt-3"

@@ -3,6 +3,7 @@ import Sidebar from "../components/admin/Sidebar.vue";
 import Navbar from "../components/general/Navbar.vue";
 import Footer from "../components/general/Footer.vue";
 import Card from "../components/general/Card.vue";
+import CreateNota from "../components/general/CreateNota.vue";
 import { ref } from "vue";
 
 const sidebarToggled = ref(false);
@@ -75,7 +76,11 @@ const toggleSidebar = () => {
                       >
                         <i class="bi bi-pencil-square"></i>
                       </button>
-                      <button type="button" class="btn btn-danger">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        @click="confirmDelete(item)"
+                      >
                         <i class="bi bi-trash-fill"></i>
                       </button>
                     </div>
@@ -99,202 +104,7 @@ const toggleSidebar = () => {
     <!-- End of Content Wrapper -->
   </div>
 
-  <!-- modal tambah nota -->
-  <div
-    class="modal fade"
-    id="modalAdd"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="modalAddLabel"
-    aria-hidden="true"
-    ref="modalAddRef"
-  >
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalAddLabel">Modal Tambah Nota</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form @submit.prevent="createNote">
-            <div class="row">
-              <div class="col-sm-4">
-                <input type="text" class="form-control" placeholder="Tempat" />
-              </div>
-              <div class="col-sm-4">
-                <input type="date" class="form-control" />
-              </div>
-              <div class="col-sm-4">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="nama customer"
-                />
-              </div>
-            </div>
-
-            <div class="row mt-2">
-              <span class="text-center h4 fw-bold text-dark">RECEIPT</span>
-            </div>
-
-            <div class="row">
-              <!-- Kolom Kiri: Proses, Atas Nama, Kendaraan, No Polisi, Keterangan -->
-              <div class="col-md-6 col-12 mb-3 border border-dark p-3">
-                <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label">Proses:</label>
-                  <div class="col-md-8 col-12">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Proses"
-                      v-model="newNota.proses"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >Atas Nama:</label
-                  >
-                  <div class="col-md-8 col-12">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Atas Nama"
-                      v-model="newNota.atas_nama"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >Kendaraan:</label
-                  >
-                  <div class="col-md-8 col-12">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Kendaraan"
-                      v-model="newNota.kendaraan"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >No Polisi:</label
-                  >
-                  <div class="col-md-8 col-12">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="No Polisi"
-                      v-model="newNota.no_polisi"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >Keterangan:</label
-                  >
-                  <div class="col-md-8 col-12">
-                    <textarea
-                      class="form-control"
-                      placeholder="Keterangan"
-                      v-model="newNota.keterangan"
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Kolom Kanan: Resmi STNK, Jasa, Lain-lain, Total -->
-              <div class="col-md-6 col-12 mb-3 border border-dark p-3">
-                <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >Resmi STNK (Rp.):</label
-                  >
-                  <div class="col-md-8 col-12">
-                    <input
-                      type="number"
-                      class="form-control"
-                      placeholder="Harga Resmi STNK"
-                      v-model="newNota.stnk_resmi"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >Jasa (Rp.):</label
-                  >
-                  <div class="col-md-8 col-12">
-                    <input
-                      type="number"
-                      class="form-control"
-                      placeholder="Harga Jasa"
-                      v-model="newNota.jasa"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >Lain-lain (Rp.):</label
-                  >
-                  <div class="col-md-8 col-12">
-                    <input
-                      type="number"
-                      class="form-control"
-                      placeholder="Harga Lain-lain"
-                      v-model="newNota.lain_lain"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >Total (Rp.):</label
-                  >
-                  <div class="col-md-8 col-12">
-                    <input
-                      type="number"
-                      class="form-control"
-                      placeholder="Total"
-                      :value="
-                        newNota.jasa + newNota.lain_lain + newNota.stnk_resmi
-                      "
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- test -->
-
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end modal tambah nota -->
+  <CreateNota @save-notes="handleSaveNotes" />
 
   <!-- modal detail -->
   <div
@@ -320,14 +130,14 @@ const toggleSidebar = () => {
           </button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="createNote">
+          <form>
             <div class="row">
               <div class="col-sm-4"></div>
               <div class="col-sm-4">
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Tempat, DD MONTH YYYY"
+                  :value="`${detailNota.alamat}, ${detailNota.tanggal}`"
                   disabled
                 />
               </div>
@@ -335,7 +145,7 @@ const toggleSidebar = () => {
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="nama customer"
+                  v-model="detailNota.pelanggan"
                   disabled
                 />
               </div>
@@ -423,12 +233,13 @@ const toggleSidebar = () => {
                     >Resmi STNK (Rp.):</label
                   >
                   <div class="col-md-8 col-12">
-                    <input
-                      type="number"
-                      class="form-control"
-                      v-model="detailNota.stnk_resmi"
-                      disabled
-                    />
+                   <input
+  type="text"
+  class="form-control"
+  :value="formatCurrency(detailNota.stnk_resmi)"
+  disabled
+/>
+
                   </div>
                 </div>
 
@@ -440,7 +251,7 @@ const toggleSidebar = () => {
                     <input
                       type="number"
                       class="form-control"
-                      v-model="detailNota.jasa"
+                      :value="formatCurrency(detailNota.jasa)"
                       disabled
                     />
                   </div>
@@ -454,7 +265,7 @@ const toggleSidebar = () => {
                     <input
                       type="number"
                       class="form-control"
-                      v-model="detailNota.lain_lain"
+                      :value="formatCurrency(detailNota.lain_lain)"
                       disabled
                     />
                   </div>
@@ -468,11 +279,10 @@ const toggleSidebar = () => {
                     <input
                       type="number"
                       class="form-control"
-                      :value="
-                        Number(detailNota.jasa) +
+                      :value="formatCurrency(Number(detailNota.jasa) +
                         Number(detailNota.lain_lain) +
-                        Number(detailNota.stnk_resmi)
-                      "
+                        Number(detailNota.stnk_resmi))"
+                      
                       disabled
                     />
                   </div>
@@ -490,7 +300,6 @@ const toggleSidebar = () => {
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
           </form>
         </div>
@@ -499,7 +308,7 @@ const toggleSidebar = () => {
   </div>
   <!-- end modal detail -->
 
-    <!-- modal update -->
+  <!-- modal update -->
   <div
     class="modal fade"
     id="modalUpdate"
@@ -733,6 +542,59 @@ export default {
     setData(nota) {
       this.detailNota = nota;
     },
+    async handleSaveNotes(notes) {
+      console.log("Notes received:", notes);
+
+      // Pastikan setiap note memiliki field yang dibutuhkan dan valid
+      const formattedNotes = notes.map((note) => ({
+        alamat: note.alamat || "Alamat tidak diisi", // Mengisi dengan nilai default jika kosong
+        tanggal: note.tanggal || new Date().toISOString().slice(0, 10), // Menggunakan tanggal saat ini jika kosong
+        pelanggan: note.pelanggan || "Pelanggan tidak diisi", // Mengisi dengan nilai default jika kosong
+        proses: note.proses || "Proses tidak diisi", // Mengisi dengan nilai default jika kosong
+        atas_nama: note.atas_nama || "Atas nama tidak diisi", // Mengisi dengan nilai default jika kosong
+        kendaraan: note.kendaraan || "Kendaraan tidak diisi", // Mengisi dengan nilai default jika kosong
+        no_polisi: note.no_polisi || "Nomor polisi tidak diisi", // Mengisi dengan nilai default jika kosong
+        keterangan: note.keterangan || "Keterangan tidak diisi", // Mengisi dengan nilai default jika kosong
+        stnk_resmi: note.stnk_resmi || 0, // Mengisi dengan 0 jika kosong
+        jasa: note.jasa || 0, // Mengisi dengan 0 jika kosong
+        lain_lain: note.lain_lain || 0, // Mengisi dengan 0 jika kosong
+      }));
+
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_ENDPOINT}/nota/create`,
+          { notes: formattedNotes }, // Kirimkan array notes dengan format yang benar
+          {
+            headers: {
+              Authorization: "Bearer " + sessionStorage.getItem("token"),
+            },
+          }
+        );
+
+        this.fetchDataNotes();
+
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: `Data berhasil diupdate`,
+        });
+
+        $("#modalAdd").modal("hide");
+      } catch (error) {
+        console.error("Error creating note:", error);
+
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
+          const apiErrors = error.response.data.errors;
+          for (const [field, messages] of Object.entries(apiErrors)) {
+            console.error(`${field}: ${messages.join(", ")}`);
+          }
+        }
+      }
+    },
     async createNote() {
       try {
         const response = await axios.post(
@@ -748,7 +610,7 @@ export default {
         Swal.fire({
           icon: "success",
           title: "Berhasil",
-          text: `Data ${this.currentTab} berhasil diupdate`,
+          text: `Data berhasil diupdate`,
         });
         $("#modalAdd").modal("hide");
         this.resetForm(); // Reset form
@@ -785,6 +647,51 @@ export default {
         this.ready = true;
         console.error(error);
       }
+    },
+    confirmDelete(data) {
+      Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: `Data ${data.proses} akan dihapus!`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteDataNota(data.id);
+        }
+      });
+    },
+    async deleteDataNota(id) {
+      try {
+        await axios.delete(
+          `${import.meta.env.VITE_API_ENDPOINT}/nota/delete/${id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + sessionStorage.getItem("token"),
+            },
+          }
+        );
+        this.fetchDataNotes();
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: `Data ${this.currentTab} berhasil dihapus`,
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Request Failed",
+          text: `Data ${this.currentTab} gagal dihapus`,
+        });
+        console.error(error);
+      }
+    },
+    formatCurrency(value) {
+      let val = (value / 1).toFixed(0).replace('.', ',');
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
   },
   created() {
