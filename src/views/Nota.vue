@@ -43,9 +43,9 @@ const toggleSidebar = () => {
                 <tr>
                   <th scope="col">No</th>
                   <th scope="col">Aksi</th>
-                  <th scope="col">Proses</th>
-                  <th scope="col">Atas Nama</th>
-                  <th scope="col">Keterangan</th>
+                  <th scope="col">Pelanggan</th>
+                  <th scope="col">Alamat</th>
+                  <th scope="col">Tanggal</th>
                 </tr>
               </thead>
               <tbody>
@@ -85,9 +85,9 @@ const toggleSidebar = () => {
                       </button>
                     </div>
                   </td>
-                  <td>{{ item.proses }}</td>
-                  <td>{{ item.atas_nama }}</td>
-                  <td>{{ item.keterangan }}</td>
+                  <td>{{ item.nama_pelanggan }}</td>
+                  <td>{{ item.alamat }}</td>
+                  <td>{{ item.tanggal }}</td>
                 </tr>
               </tbody>
             </DataTable>
@@ -132,7 +132,7 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="row">
-              <div class="col-sm-4"></div>
+              <div class="col-sm-3"></div>
               <div class="col-sm-4">
                 <input
                   type="text"
@@ -145,17 +145,22 @@ const toggleSidebar = () => {
                 <input
                   type="text"
                   class="form-control"
-                  v-model="detailNota.pelanggan"
+                  v-model="detailNota.nama_pelanggan"
                   disabled
                 />
+              </div>
+              <div class="col-sm-1">
+                <div class="btn btn-secondary" @click="downloadPdf(detailNota.id)">
+                  <i class="bi bi-printer-fill"></i>
+                </div>
               </div>
             </div>
 
             <div class="row mt-2">
-              <span class="text-center h4 fw-bold text-dark">RECEIPT</span>
             </div>
 
-            <div class="row">
+            <div class="row" v-for="(item, index) in detailNota.notes" :key="item.id">
+              <span class="text-center h4 fw-bold text-dark mt-4">RECEIPT {{index+1}}</span>
               <!-- Kolom Kiri: Proses, Atas Nama, Kendaraan, No Polisi, Keterangan -->
               <div class="col-md-6 col-12 mb-3 border border-dark p-3">
                 <div class="form-group row">
@@ -164,7 +169,7 @@ const toggleSidebar = () => {
                     <input
                       type="text"
                       class="form-control"
-                      v-model="detailNota.proses"
+                      v-model="item.proses"
                       disabled
                     />
                   </div>
@@ -178,7 +183,7 @@ const toggleSidebar = () => {
                     <input
                       type="text"
                       class="form-control"
-                      v-model="detailNota.atas_nama"
+                      v-model="item.atas_nama"
                       disabled
                     />
                   </div>
@@ -192,7 +197,7 @@ const toggleSidebar = () => {
                     <input
                       type="text"
                       class="form-control"
-                      v-model="detailNota.kendaraan"
+                      v-model="item.kendaraan"
                       disabled
                     />
                   </div>
@@ -206,7 +211,7 @@ const toggleSidebar = () => {
                     <input
                       type="text"
                       class="form-control"
-                      v-model="detailNota.no_polisi"
+                      v-model="item.no_polisi"
                       disabled
                     />
                   </div>
@@ -219,7 +224,7 @@ const toggleSidebar = () => {
                   <div class="col-md-8 col-12">
                     <textarea
                       class="form-control"
-                      v-model="detailNota.keterangan"
+                      v-model="item.keterangan"
                       disabled
                     ></textarea>
                   </div>
@@ -233,13 +238,12 @@ const toggleSidebar = () => {
                     >Resmi STNK (Rp.):</label
                   >
                   <div class="col-md-8 col-12">
-                   <input
-  type="text"
-  class="form-control"
-  :value="formatCurrency(detailNota.stnk_resmi)"
-  disabled
-/>
-
+                    <input
+                      type="text"
+                      class="form-control"
+                      :value="formatCurrency(item.stnk_resmi)"
+                      disabled
+                    />
                   </div>
                 </div>
 
@@ -251,7 +255,7 @@ const toggleSidebar = () => {
                     <input
                       type="number"
                       class="form-control"
-                      :value="formatCurrency(detailNota.jasa)"
+                      :value="formatCurrency(item.jasa)"
                       disabled
                     />
                   </div>
@@ -265,7 +269,7 @@ const toggleSidebar = () => {
                     <input
                       type="number"
                       class="form-control"
-                      :value="formatCurrency(detailNota.lain_lain)"
+                      :value="formatCurrency(item.lain_lain)"
                       disabled
                     />
                   </div>
@@ -279,10 +283,13 @@ const toggleSidebar = () => {
                     <input
                       type="number"
                       class="form-control"
-                      :value="formatCurrency(Number(detailNota.jasa) +
-                        Number(detailNota.lain_lain) +
-                        Number(detailNota.stnk_resmi))"
-                      
+                      :value="
+                        formatCurrency(
+                          Number(item.jasa) +
+                            Number(item.lain_lain) +
+                            Number(item.stnk_resmi)
+                        )
+                      "
                       disabled
                     />
                   </div>
@@ -541,9 +548,14 @@ export default {
   methods: {
     setData(nota) {
       this.detailNota = nota;
+
+      // console.log('test detail :', nota);
+      console.log("test update :", this.detailNota.notes);
     },
-    async handleSaveNotes(notes) {
+    async handleSaveNotes(data) {
+      const { header, notes } = data;
       console.log("Notes received:", notes);
+      console.log("Header received:", header);
 
       // Pastikan setiap note memiliki field yang dibutuhkan dan valid
       const formattedNotes = notes.map((note) => ({
@@ -563,7 +575,7 @@ export default {
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_ENDPOINT}/nota/create`,
-          { notes: formattedNotes }, // Kirimkan array notes dengan format yang benar
+          { notes: formattedNotes, header: header }, // Kirimkan array notes dengan format yang benar
           {
             headers: {
               Authorization: "Bearer " + sessionStorage.getItem("token"),
@@ -648,6 +660,10 @@ export default {
         console.error(error);
       }
     },
+    async downloadPdf(pelangganId) {
+      window.location.href = `${import.meta.env.VITE_API_ENDPOINT}/nota/export/${pelangganId}`;
+
+    },
     confirmDelete(data) {
       Swal.fire({
         title: "Apakah Anda yakin?",
@@ -667,7 +683,7 @@ export default {
     async deleteDataNota(id) {
       try {
         await axios.delete(
-          `${import.meta.env.VITE_API_ENDPOINT}/nota/delete/${id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/nota/delete-pelanggan/${id}`,
           {
             headers: {
               Authorization: "Bearer " + sessionStorage.getItem("token"),
@@ -690,7 +706,7 @@ export default {
       }
     },
     formatCurrency(value) {
-      let val = (value / 1).toFixed(0).replace('.', ',');
+      let val = (value / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
   },
