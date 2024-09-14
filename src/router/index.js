@@ -23,6 +23,11 @@ const router = createRouter({
       name: 'nota-detail',
       component: () => import('../views/NotaDetail.vue')
     },    
+    {
+      path: '/print',
+      name: 'print',
+      component: () => import('../views/Print.vue')
+    },    
   ]
 })
 

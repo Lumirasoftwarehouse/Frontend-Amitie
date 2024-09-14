@@ -147,8 +147,9 @@
                       <label class="col-md-4 col-12 col-form-label">Resmi STNK (Rp.):</label>
                       <div class="col-md-8 col-12">
                         <input
-                          v-model="note.stnk_resmi"
-                          type="number"
+                          v-model="note.formattedStnkResmi"
+                          @input="updateCurrency(note, 'stnk_resmi', $event)"
+                          type="text"
                           class="form-control"
                           placeholder="Harga Resmi STNK"
                         />
@@ -159,8 +160,9 @@
                       <label class="col-md-4 col-12 col-form-label">Jasa (Rp.):</label>
                       <div class="col-md-8 col-12">
                         <input
-                          v-model="note.jasa"
-                          type="number"
+                          v-model="note.formattedJasa"
+                          @input="updateCurrency(note, 'jasa', $event)"
+                          type="text"
                           class="form-control"
                           placeholder="Harga Jasa"
                         />
@@ -171,8 +173,9 @@
                       <label class="col-md-4 col-12 col-form-label">Lain-lain (Rp.):</label>
                       <div class="col-md-8 col-12">
                         <input
-                          v-model="note.lain_lain"
-                          type="number"
+                          v-model="note.formattedLainLain"
+                          @input="updateCurrency(note, 'lain_lain', $event)"
+                          type="text"
                           class="form-control"
                           placeholder="Harga Lain-lain"
                         />
@@ -183,16 +186,23 @@
                       <label class="col-md-4 col-12 col-form-label">Total (Rp.):</label>
                       <div class="col-md-8 col-12">
                         <input
-                          type="number"
+                          type="text"
                           class="form-control"
                           placeholder="Total"
-                          :value="note.jasa + note.lain_lain + note.stnk_resmi"
+                          :value="formatCurrency(note.stnk_resmi + note.jasa + note.lain_lain)"
                           readonly
                         />
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <!-- Grand Total Section -->
+            <div class="row mt-3">
+              <div class="col-12 text-end">
+                <h5>Jumlah Keseluruhan: {{ formatCurrency(grandTotal) }}</h5>
               </div>
             </div>
 
@@ -230,11 +240,22 @@ export default {
           no_polisi: "",
           keterangan: "",
           stnk_resmi: 0,
+          formattedStnkResmi: "Rp. 0",
           jasa: 0,
+          formattedJasa: "Rp. 0",
           lain_lain: 0,
+          formattedLainLain: "Rp. 0",
+          total: 0,
         },
       ],
     };
+  },
+  computed: {
+    grandTotal() {
+      return this.notes.reduce((sum, note) => {
+        return sum + (parseFloat(note.stnk_resmi) || 0) + (parseFloat(note.jasa) || 0) + (parseFloat(note.lain_lain) || 0);
+      }, 0);
+    }
   },
   methods: {
     addNote() {
@@ -245,8 +266,12 @@ export default {
         no_polisi: "",
         keterangan: "",
         stnk_resmi: 0,
+        formattedStnkResmi: "Rp. 0",
         jasa: 0,
+        formattedJasa: "Rp. 0",
         lain_lain: 0,
+        formattedLainLain: "Rp. 0",
+        total: 0,
       });
     },
     removeNote(index) {
@@ -256,10 +281,24 @@ export default {
       // Emit the data to parent
       this.$emit("save-notes", { header: this.header, notes: this.notes });
     },
+    updateCurrency(note, field, event) {
+      // Hapus format rupiah dari input dan konversi kembali menjadi angka asli
+      let value = event.target.value.replace(/\D/g, ""); // Menghapus semua karakter non-digit
+      note[field] = parseInt(value) || 0; // Menyimpan angka asli
+
+      // Update format tampilan dalam rupiah
+      if (field === "stnk_resmi") {
+        note.formattedStnkResmi = this.formatCurrency(note.stnk_resmi);
+      } else if (field === "jasa") {
+        note.formattedJasa = this.formatCurrency(note.jasa);
+      } else if (field === "lain_lain") {
+        note.formattedLainLain = this.formatCurrency(note.lain_lain);
+      }
+    },
+    formatCurrency(value) {
+      let val = (value / 1).toFixed(0).replace(",", ".");
+      return "Rp. " + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
   },
 };
 </script>
-
-<style scoped>
-/* Add any necessary styles */
-</style>

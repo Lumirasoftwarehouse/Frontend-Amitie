@@ -150,9 +150,12 @@ const toggleSidebar = () => {
                 />
               </div>
               <div class="col-sm-1">
-                <div class="btn btn-secondary" @click="downloadPdf(detailNota.id)">
-                  <i class="bi bi-printer-fill"></i>
-                </div>
+                <!-- @click="downloadPdf(detailNota.id)" -->
+                <router-link :to="{ path: '/print', query: { id: detailNota.id } }">
+                  <div class="btn btn-secondary">
+                    <i class="bi bi-printer-fill"></i>
+                  </div>
+                </router-link>
               </div>
             </div>
 
@@ -570,6 +573,7 @@ export default {
         stnk_resmi: note.stnk_resmi || 0, // Mengisi dengan 0 jika kosong
         jasa: note.jasa || 0, // Mengisi dengan 0 jika kosong
         lain_lain: note.lain_lain || 0, // Mengisi dengan 0 jika kosong
+        total: note.stnk_resmi + note.jasa + note.lain_lain
       }));
 
       try {
