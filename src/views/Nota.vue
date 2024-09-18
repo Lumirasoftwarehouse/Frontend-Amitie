@@ -67,15 +67,17 @@ const toggleSidebar = () => {
                         <i class="bi bi-info"></i>
                       </button>
 
-                      <button
-                        type="button"
-                        class="btn btn-warning"
-                        data-toggle="modal"
-                        data-target="#modalUpdate"
-                        @click="setData(item)"
+                      <router-link
+                        v-if="detailNota && detailNota.id"
+                        :to="{
+                          path: '/print',
+                          query: { id: parseInt(detailNota.id), index: 1 },
+                        }"
                       >
-                        <i class="bi bi-pencil-square"></i>
-                      </button>
+                        <div class="btn btn-secondary">
+                          <i class="bi bi-printer-fill"></i>
+                        </div>
+                      </router-link>
                       <button
                         type="button"
                         class="btn btn-danger"
@@ -149,27 +151,31 @@ const toggleSidebar = () => {
                   disabled
                 />
               </div>
-              <div class="col-sm-1">
-                <!-- @click="downloadPdf(detailNota.id)" -->
-                <router-link 
-  v-if="detailNota && detailNota.id"
-  :to="{ 
-    path: '/print', 
-    query: { id: parseInt(detailNota.id), index: 1 } 
-  }">
-  <div class="btn btn-secondary">
-    <i class="bi bi-printer-fill"></i>
-  </div>
-</router-link>
-
-              </div>
+              <!-- <div class="col-sm-1">
+                <router-link
+                  v-if="detailNota && detailNota.id"
+                  :to="{
+                    path: '/print',
+                    query: { id: parseInt(detailNota.id), index: 1 },
+                  }"
+                >
+                  <div class="btn btn-secondary">
+                    <i class="bi bi-printer-fill"></i>
+                  </div>
+                </router-link>
+              </div> -->
             </div>
 
-            <div class="row mt-2">
-            </div>
+            <div class="row mt-2"></div>
 
-            <div class="row" v-for="(item, index) in detailNota.notes" :key="item.id">
-              <span class="text-center h4 fw-bold text-dark mt-4">RECEIPT {{index+1}}</span>
+            <div
+              class="row"
+              v-for="(item, index) in detailNota.notes"
+              :key="item.id"
+            >
+              <span class="text-center h4 fw-bold text-dark mt-4"
+                >RECEIPT {{ index + 1 }}</span
+              >
               <!-- Kolom Kiri: Proses, Atas Nama, Kendaraan, No Polisi, Keterangan -->
               <div class="col-md-6 col-12 mb-3 border border-dark p-3">
                 <div class="form-group row">
@@ -258,9 +264,7 @@ const toggleSidebar = () => {
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >Jasa</label
-                  >
+                  <label class="col-md-4 col-12 col-form-label">Jasa</label>
                   <div class="col-md-8 col-12">
                     <input
                       type="text"
@@ -296,8 +300,7 @@ const toggleSidebar = () => {
                   </div>
                 </div>
                 <div class="form-group row" v-if="item.lain_3 != '0'">
-                  <label class="col-md-4 col-12 col-form-label"></label
-                  >
+                  <label class="col-md-4 col-12 col-form-label"></label>
                   <div class="col-md-8 col-12">
                     <input
                       type="text"
@@ -308,9 +311,7 @@ const toggleSidebar = () => {
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    ></label
-                  >
+                  <label class="col-md-4 col-12 col-form-label"></label>
                   <div class="col-md-8 col-12" v-if="item.lain_4 != '0'">
                     <input
                       type="text"
@@ -322,18 +323,12 @@ const toggleSidebar = () => {
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-md-4 col-12 col-form-label"
-                    >Total</label
-                  >
+                  <label class="col-md-4 col-12 col-form-label">Total</label>
                   <div class="col-md-8 col-12">
                     <input
                       type="text"
                       class="form-control"
-                      :value="
-                        formatCurrency(
-                         item.total
-                        )
-                      "
+                      :value="formatCurrency(item.total)"
                       disabled
                     />
                   </div>
@@ -617,7 +612,13 @@ export default {
         lain_2: note.lain_2 || 0, // Mengisi dengan 0 jika kosong
         lain_3: note.lain_3 || 0, // Mengisi dengan 0 jika kosong
         lain_4: note.lain_4 || 0, // Mengisi dengan 0 jika kosong
-        total: note.stnk_resmi + note.jasa + note.lain_1 + note.lain_2 + note.lain_3 + note.lain_4
+        total:
+          note.stnk_resmi +
+          note.jasa +
+          note.lain_1 +
+          note.lain_2 +
+          note.lain_3 +
+          note.lain_4,
       }));
 
       try {
@@ -709,8 +710,9 @@ export default {
       }
     },
     async downloadPdf(pelangganId) {
-      window.location.href = `${import.meta.env.VITE_API_ENDPOINT}/nota/export/${pelangganId}`;
-
+      window.location.href = `${
+        import.meta.env.VITE_API_ENDPOINT
+      }/nota/export/${pelangganId}`;
     },
     confirmDelete(data) {
       Swal.fire({
@@ -754,17 +756,14 @@ export default {
       }
     },
 
-formatCurrency(value) {
+    formatCurrency(value) {
       let numericValue = parseFloat(value);
       if (isNaN(numericValue)) {
         return "0";
       }
       // Pemformatan angka dengan pemisah ribuan
-      return numericValue
-        .toFixed(0)
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-
+      return numericValue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
   },
   created() {
     this.fetchDataNotes();
