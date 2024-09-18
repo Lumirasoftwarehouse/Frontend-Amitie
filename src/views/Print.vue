@@ -33,99 +33,109 @@
           </div>
           <div id="element-to-convert">
             <div class="text-black bg-white">
-              <!-- header -->
               <!-- Detail Nota -->
-                  <div v-if="note.length > 0">
-                    <div v-for="(item, index) in note" :key="index">
-                      <div class="row border border-dark p-3 mb-3">
-                        <div class="col-6">
-                          <div class="row">
-                            <div class="col-4">
-                              <img
-                                src="/img/amitie.jpg"
-                                alt="logo"
-                                width="100"
-                              />
-                            </div>
-                            <div class="col-8">
-                              <h5 class="text-center">Biro Jasa</h5>
-                              <h3 class="fw-bold text-center">"AMITIE"</h3>
-                              <span style="font-size: 12px"
-                                >Jl. Bidara Raya No. 9 RT.02 RW.04 Jembatan Dua,
-                                Jakarta Utara Telp. 021-6620191,
-                                021-6625312</span
-                              >
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="row mt-5">
-                            <div class="col-6">
-                              <p>{{ alamat + ", " + tanggal }}</p>
-                            </div>
-                            <div class="col-6">
-                              <p>{{ pelanggan }}</p>
-                            </div>
-                          </div>
-                        </div>
-                        <h4 class="text-center mt-3">Receipt {{ index + 1 }}</h4>
+              <div v-if="note.length > 0">
+                <div v-for="(item, index) in note" :key="index">
+                  <div class="row border border-dark p-3 mb-3">
+                    <div class="col-6">
                       <div class="row">
-                        <div class="col-6 border border-dark p-3 mb-3">
-                          <p><strong>Proses:</strong> {{ item.proses }}</p>
-                          <p>
-                            <strong>Atas Nama:</strong> {{ item.atas_nama }}
-                          </p>
-                          <p>
-                            <strong>Kendaraan:</strong> {{ item.kendaraan }}
-                          </p>
-                          <p>
-                            <strong>No Polisi:</strong> {{ item.no_polisi }}
-                          </p>
-                          <p>
-                            <strong>Keterangan:</strong> {{ item.keterangan }}
-                          </p>
+                        <div class="col-4">
+                          <img src="/img/amitie.jpg" alt="logo" width="100" />
                         </div>
-                        <div class="col-6 border border-dark p-3 mb-3">
-                          <p>
-                            <strong>STNK Resmi:</strong>
-                            {{ formatCurrency(item.stnk_resmi) }}
-                          </p>
-                          <p>
-                            <strong>Jasa:</strong>
-                            {{ formatCurrency(item.jasa) }}
-                          </p>
-                          <p>
-                            <strong>Lain-lain:</strong>
-                            {{ formatCurrency(item.lain_lain) }}
-                          </p>
-                          <p>
-                            <strong>Total:</strong>
-                            {{ formatCurrency(item.total) }}
-                          </p>
+                        <div class="col-8">
+                          <h5 class="text-center">Biro Jasa</h5>
+                          <h3 class="fw-bold text-center">"AMITIE"</h3>
+                          <span style="font-size: 12px"
+                            >Jl. Bidara Raya No. 9 RT.02 RW.04 Jembatan Dua,
+                            Jakarta Utara Telp. 021-6620191, 021-6625312</span
+                          >
                         </div>
                       </div>
-                      </div>
-                      
                     </div>
-                    <h5 class="text-end">
-                      Jumlah Keseluruhan: {{ formatCurrency(grandTotal) }}
-                    </h5>
+                    <div class="col-6">
+                      <div class="row mt-5">
+                        <div class="col-6">
+                          <p>{{ alamat + ", " + tanggal }}</p>
+                        </div>
+                        <div class="col-6">
+                          <p>{{ pelanggan }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <h4 class="text-center mt-3">Receipt {{ index + 1 }}</h4>
+                    <div class="row">
+                      <div class="col-6 border border-dark p-3 mb-3">
+                        <div class="row">
+                          <div class="col-4"><strong>Proses</strong></div>
+                          <div class="col-8">: {{ item.proses }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"><strong>Atas Nama</strong></div>
+                          <div class="col-8">: {{ item.atas_nama }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"><strong>Kendaraan</strong></div>
+                          <div class="col-8">: {{ item.kendaraan }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"><strong>No Polisi</strong></div>
+                          <div class="col-8">: {{ item.no_polisi }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"><strong>Keterangan</strong></div>
+                          <div class="col-8">: {{ item.keterangan }}</div>
+                        </div>
+                      </div>
+                      <div class="col-6 border border-dark p-3 mb-3">
+                        <div class="row">
+                          <div class="col-4"><strong>STNK Resmi</strong></div>
+                          <div class="col-8">: {{ formatCurrency(item.stnk_resmi) }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"><strong>Jasa</strong></div>
+                          <div class="col-8">: {{ formatCurrency(item.jasa) }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"><strong>Lain-lain</strong></div>
+                          <div class="col-8">: {{ formatCurrency(item.lain_1) }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"></div>
+                          <div class="col-8">: {{ formatCurrency(item.lain_2) }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"></div>
+                          <div class="col-8">: {{ formatCurrency(item.lain_3) }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"></div>
+                          <div class="col-8">: {{ formatCurrency(item.lain_4) }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-4"><strong>Total</strong></div>
+                          <div class="col-8">: {{ formatCurrency(item.total) }}</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-
-                  <!-- keterangan cetak -->
-                  <div class="row mt-2">
-                    <small
-                      >Dokument ini dicetak pada: {{ now.date }}
-                      {{ now.time }}</small
-                    >
-                  </div>
+                </div>
+                <h5 class="text-end">
+                  Jumlah Keseluruhan: {{ formatCurrency(grandTotal) }}
+                </h5>
+              </div>
+              <!-- Keterangan Cetak -->
+              <div class="row mt-2">
+                <small
+                  >Dokument ini dicetak pada: {{ now.date }}
+                  {{ now.time }}</small
+                >
+              </div>
             </div>
           </div>
         </div>
         <!-- /.container-fluid -->
       </div>
       <!-- End of Main Content -->
-
       <!-- Footer -->
       <Footer />
       <!-- End of Footer -->
@@ -134,81 +144,100 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, computed } from "vue";
-import { useRoute } from "vue-router";
+<script>
 import axios from "axios";
 import html2pdf from "html2pdf.js";
 import Navbar from "../components/general/Navbar.vue";
 import Footer from "../components/general/Footer.vue";
-import Sidebar from "../components/admin/Sidebar.vue"; // Assuming Sidebar component exists
+import Sidebar from "../components/admin/Sidebar.vue";
+import { mapGetters } from "vuex";
 
-const route = useRoute();
-const note = ref([]);
-const alamat = ref("");
-const tanggal = ref("");
-const pelanggan = ref("");
-const now = ref({});
+export default {
+  components: {
+    Navbar,
+    Footer,
+    Sidebar,
+  },
+  props: {
+    id: {
+      type: Number, // Karena sudah di-convert ke integer
+      required: true,
+    },
+    index: {
+      type: Number, // Karena sudah di-convert ke integer
+      required: true,
+    },
+  },
+  data() {
+    return {
+      note: [],
+      alamat: "",
+      tanggal: "",
+      pelanggan: "",
+      now: {},
+      load: true,
+    };
+  },
+  computed: {
+    grandTotal() {
+      return this.note.reduce((sum, item) => sum + parseFloat(item.total), 0);
+    },
+  },
+  methods: {
+    getCurrentDateTime() {
+      const date = new Date();
+      const day = String(date.getDate()).padStart(2, "0");
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const year = date.getFullYear();
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const seconds = String(date.getSeconds()).padStart(2, "0");
 
-const getCurrentDateTime = () => {
-  const date = new Date();
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-
-  now.value = {
-    date: `${day}-${month}-${year}`,
-    time: `${hours}:${minutes}:${seconds}`,
-  };
+      this.now = {
+        date: `${day}-${month}-${year}`,
+        time: `${hours}:${minutes}:${seconds}`,
+      };
+    },
+    async fetchData() {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_ENDPOINT}/nota/detail/${this.id}`
+        );
+        this.note = response.data.data.notes;
+        this.alamat = response.data.data.alamat;
+        this.tanggal = response.data.data.tanggal;
+        this.pelanggan = response.data.data.nama_pelanggan;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
+    exportToPDF() {
+      const element = document.getElementById("element-to-convert");
+      const opt = {
+        margin: 1,
+        filename: "document.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      };
+      html2pdf().from(element).set(opt).save();
+    },
+    formatCurrency(value) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(value);
+    },
+  },
+  created() {
+    if (this.index == 1) {
+      window.location.href = `https://apiamitie.lumirainternational.com/print?id=${this.id}`;
+    }
+    // this.idNota = this.$route.query.id;
+    this.getCurrentDateTime();
+    this.fetchData();
+  },
 };
-
-const fetchData = async (id) => {
-  try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_ENDPOINT}/nota/detail/${id}`
-    );
-    note.value = response.data.data.notes;
-    alamat.value = response.data.data.alamat;
-    tanggal.value = response.data.data.tanggal;
-    pelanggan.value = response.data.data.nama_pelanggan;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
-
-const exportToPDF = () => {
-  const element = document.getElementById("element-to-convert");
-  const opt = {
-    margin: 1,
-    filename: "document.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-  };
-  html2pdf().from(element).set(opt).save();
-};
-
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-  }).format(value);
-};
-
-const grandTotal = computed(() => {
-  return note.value.reduce((sum, item) => sum + parseFloat(item.total), 0);
-});
-
-onMounted(() => {
-  getCurrentDateTime();
-  const id = route.query.id;
-  if (id) {
-    fetchData(id);
-  }
-});
 </script>
 
 <style scoped>
@@ -216,16 +245,6 @@ onMounted(() => {
   .imageCustom {
     width: 100% !important;
   }
-}
-
-.surat {
-  background-color: #ffffff !important;
-}
-hr {
-  border: none;
-  height: 3px;
-  color: #000000 !important; /* old IE */
-  background-color: #000000 !important; /* Modern Browsers */
 }
 #app {
   margin-top: 60px;

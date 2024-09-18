@@ -151,11 +151,17 @@ const toggleSidebar = () => {
               </div>
               <div class="col-sm-1">
                 <!-- @click="downloadPdf(detailNota.id)" -->
-                <router-link :to="{ path: '/print', query: { id: detailNota.id } }">
-                  <div class="btn btn-secondary">
-                    <i class="bi bi-printer-fill"></i>
-                  </div>
-                </router-link>
+                <router-link 
+  v-if="detailNota && detailNota.id"
+  :to="{ 
+    path: '/print', 
+    query: { id: parseInt(detailNota.id), index: 1 } 
+  }">
+  <div class="btn btn-secondary">
+    <i class="bi bi-printer-fill"></i>
+  </div>
+</router-link>
+
               </div>
             </div>
 
@@ -228,6 +234,7 @@ const toggleSidebar = () => {
                     <textarea
                       class="form-control"
                       v-model="item.keterangan"
+                      rows="5"
                       disabled
                     ></textarea>
                   </div>
@@ -238,7 +245,7 @@ const toggleSidebar = () => {
               <div class="col-md-6 col-12 mb-3 border border-dark p-3">
                 <div class="form-group row">
                   <label class="col-md-4 col-12 col-form-label"
-                    >Resmi STNK (Rp.):</label
+                    >Resmi STNK</label
                   >
                   <div class="col-md-8 col-12">
                     <input
@@ -252,11 +259,11 @@ const toggleSidebar = () => {
 
                 <div class="form-group row">
                   <label class="col-md-4 col-12 col-form-label"
-                    >Jasa (Rp.):</label
+                    >Jasa</label
                   >
                   <div class="col-md-8 col-12">
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
                       :value="formatCurrency(item.jasa)"
                       disabled
@@ -264,15 +271,51 @@ const toggleSidebar = () => {
                   </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row" v-if="item.lain_1">
                   <label class="col-md-4 col-12 col-form-label"
-                    >Lain-lain (Rp.):</label
+                    >Lain-lain</label
                   >
                   <div class="col-md-8 col-12">
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
-                      :value="formatCurrency(item.lain_lain)"
+                      :value="formatCurrency(item.lain_1)"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="form-group row" v-if="item.lain_2 != '0'">
+                  <label class="col-md-4 col-12 col-form-label"></label>
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      :value="formatCurrency(item.lain_2)"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="form-group row" v-if="item.lain_3 != '0'">
+                  <label class="col-md-4 col-12 col-form-label"></label
+                  >
+                  <div class="col-md-8 col-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      :value="formatCurrency(item.lain_3)"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 col-12 col-form-label"
+                    ></label
+                  >
+                  <div class="col-md-8 col-12" v-if="item.lain_4 != '0'">
+                    <input
+                      type="text"
+                      class="form-control"
+                      :value="formatCurrency(item.lain_4)"
                       disabled
                     />
                   </div>
@@ -280,17 +323,15 @@ const toggleSidebar = () => {
 
                 <div class="form-group row">
                   <label class="col-md-4 col-12 col-form-label"
-                    >Total (Rp.):</label
+                    >Total</label
                   >
                   <div class="col-md-8 col-12">
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
                       :value="
                         formatCurrency(
-                          Number(item.jasa) +
-                            Number(item.lain_lain) +
-                            Number(item.stnk_resmi)
+                         item.total
                         )
                       "
                       disabled
@@ -572,8 +613,11 @@ export default {
         keterangan: note.keterangan || "Keterangan tidak diisi", // Mengisi dengan nilai default jika kosong
         stnk_resmi: note.stnk_resmi || 0, // Mengisi dengan 0 jika kosong
         jasa: note.jasa || 0, // Mengisi dengan 0 jika kosong
-        lain_lain: note.lain_lain || 0, // Mengisi dengan 0 jika kosong
-        total: note.stnk_resmi + note.jasa + note.lain_lain
+        lain_1: note.lain_1 || 0, // Mengisi dengan 0 jika kosong
+        lain_2: note.lain_2 || 0, // Mengisi dengan 0 jika kosong
+        lain_3: note.lain_3 || 0, // Mengisi dengan 0 jika kosong
+        lain_4: note.lain_4 || 0, // Mengisi dengan 0 jika kosong
+        total: note.stnk_resmi + note.jasa + note.lain_1 + note.lain_2 + note.lain_3 + note.lain_4
       }));
 
       try {
@@ -709,10 +753,18 @@ export default {
         console.error(error);
       }
     },
-    formatCurrency(value) {
-      let val = (value / 1).toFixed(0).replace(".", ",");
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
+
+formatCurrency(value) {
+      let numericValue = parseFloat(value);
+      if (isNaN(numericValue)) {
+        return "0";
+      }
+      // Pemformatan angka dengan pemisah ribuan
+      return numericValue
+        .toFixed(0)
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
   },
   created() {
     this.fetchDataNotes();

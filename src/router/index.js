@@ -26,7 +26,9 @@ const router = createRouter({
     {
       path: '/print',
       name: 'print',
-      component: () => import('../views/Print.vue')
+      component: () => import('../views/Print.vue'),
+      props: (route) => ({ id: parseInt(route.query.id), 
+        index: parseInt(route.query.index) })
     },    
   ]
 })

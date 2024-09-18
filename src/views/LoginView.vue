@@ -122,7 +122,7 @@ export default {
 
           const token = response.data.access_token;
           sessionStorage.setItem("token", token);
-            this.$router.push("/dashboard");
+            this.$router.push("/nota");
 
         })
         .catch((error) => {

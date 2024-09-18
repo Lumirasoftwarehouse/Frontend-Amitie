@@ -52,7 +52,11 @@
           <!-- Button to Add Notes -->
           <div class="row mt-3 mb-2">
             <div class="col-12">
-              <button type="button" class="btn btn-primary mb-2 float-end" @click="addNote">
+              <button
+                type="button"
+                class="btn btn-primary mb-2 float-end"
+                @click="addNote"
+              >
                 Tambah Nota
               </button>
             </div>
@@ -83,7 +87,9 @@
                 <div class="row">
                   <div class="col-md-6 col-12 mb-3 border border-dark p-3">
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label">Proses:</label>
+                      <label class="col-md-4 col-12 col-form-label"
+                        >Proses:</label
+                      >
                       <div class="col-md-8 col-12">
                         <input
                           v-model="note.proses"
@@ -95,7 +101,9 @@
                     </div>
 
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label">Atas Nama:</label>
+                      <label class="col-md-4 col-12 col-form-label"
+                        >Atas Nama:</label
+                      >
                       <div class="col-md-8 col-12">
                         <input
                           v-model="note.atas_nama"
@@ -107,7 +115,9 @@
                     </div>
 
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label">Kendaraan:</label>
+                      <label class="col-md-4 col-12 col-form-label"
+                        >Kendaraan:</label
+                      >
                       <div class="col-md-8 col-12">
                         <input
                           v-model="note.kendaraan"
@@ -119,7 +129,9 @@
                     </div>
 
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label">No Polisi:</label>
+                      <label class="col-md-4 col-12 col-form-label"
+                        >No Polisi:</label
+                      >
                       <div class="col-md-8 col-12">
                         <input
                           v-model="note.no_polisi"
@@ -131,12 +143,15 @@
                     </div>
 
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label">Keterangan:</label>
+                      <label class="col-md-4 col-12 col-form-label"
+                        >Keterangan:</label
+                      >
                       <div class="col-md-8 col-12">
                         <textarea
                           v-model="note.keterangan"
                           class="form-control"
                           placeholder="Keterangan"
+                          rows="5"
                         ></textarea>
                       </div>
                     </div>
@@ -144,7 +159,9 @@
 
                   <div class="col-md-6 col-12 mb-3 border border-dark p-3">
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label">Resmi STNK (Rp.):</label>
+                      <label class="col-md-4 col-12 col-form-label"
+                        >Resmi STNK</label
+                      >
                       <div class="col-md-8 col-12">
                         <input
                           v-model="note.formattedStnkResmi"
@@ -157,7 +174,9 @@
                     </div>
 
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label">Jasa (Rp.):</label>
+                      <label class="col-md-4 col-12 col-form-label"
+                        >Jasa</label
+                      >
                       <div class="col-md-8 col-12">
                         <input
                           v-model="note.formattedJasa"
@@ -170,26 +189,73 @@
                     </div>
 
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label">Lain-lain (Rp.):</label>
+                      <label class="col-md-4 col-12 col-form-label"
+                        >Lain-lain</label
+                      >
                       <div class="col-md-8 col-12">
                         <input
-                          v-model="note.formattedLainLain"
-                          @input="updateCurrency(note, 'lain_lain', $event)"
+                          v-model="note.formattedLain1"
+                          @input="updateCurrency(note, 'lain_1', $event)"
                           type="text"
                           class="form-control"
-                          placeholder="Harga Lain-lain"
+                          placeholder="Harga Lain-lain 1"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group row" v-if="note.lain_1!=0">
+                      <label class="col-md-4 col-12 col-form-label"></label>
+                      <div class="col-md-8 col-12 float-end">
+                        <input
+                          v-model="note.formattedLain2"
+                          @input="updateCurrency(note, 'lain_2', $event)"
+                          type="text"
+                          class="form-control"
+                          placeholder="Harga Lain-lain 2"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group row" v-if="note.lain_2!=0">
+                      <label class="col-md-4 col-12 col-form-label"></label>
+                      <div class="col-md-8 col-12">
+                        <input
+                          v-model="note.formattedLain3"
+                          @input="updateCurrency(note, 'lain_3', $event)"
+                          type="text"
+                          class="form-control"
+                          placeholder="Harga Lain-lain 3"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group row" v-if="note.lain_3!=0">
+                      <label class="col-md-4 col-12 col-form-label"></label>
+                      <div class="col-md-8 col-12">
+                        <input
+                          v-model="note.formattedLain4"
+                          @input="updateCurrency(note, 'lain_4', $event)"
+                          type="text"
+                          class="form-control"
+                          placeholder="Harga Lain-lain 4"
                         />
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label">Total (Rp.):</label>
+                      <label class="col-md-4 col-12 col-form-label"
+                        >Total (Rp.):</label
+                      >
                       <div class="col-md-8 col-12">
                         <input
                           type="text"
                           class="form-control"
                           placeholder="Total"
-                          :value="formatCurrency(note.stnk_resmi + note.jasa + note.lain_lain)"
+                          :value="
+                            formatCurrency(
+                              note.stnk_resmi + note.jasa + note.lain_1 + note.lain_2 + note.lain_3 + note.lain_4 
+                            )
+                          "
                           readonly
                         />
                       </div>
@@ -230,7 +296,7 @@ export default {
       header: {
         alamat: "",
         tanggal: "",
-        pelanggan: ""
+        pelanggan: "",
       },
       notes: [
         {
@@ -245,17 +311,34 @@ export default {
           formattedJasa: "Rp. 0",
           lain_lain: 0,
           formattedLainLain: "Rp. 0",
+          lain_1: 0,
+          formattedLain1: "Rp. 0",
+          lain_2: 0,
+          formattedLain2: "Rp. 0",
+          lain_3: 0,
+          formattedLain3: "Rp. 0",
+          lain_4: 0,
+          formattedLain4: "Rp. 0",
           total: 0,
         },
       ],
     };
   },
+
   computed: {
     grandTotal() {
       return this.notes.reduce((sum, note) => {
-        return sum + (parseFloat(note.stnk_resmi) || 0) + (parseFloat(note.jasa) || 0) + (parseFloat(note.lain_lain) || 0);
+        return (
+          sum +
+          (parseFloat(note.stnk_resmi) || 0) +
+          (parseFloat(note.jasa) || 0) +
+          (parseFloat(note.lain_1) || 0) +
+          (parseFloat(note.lain_2) || 0) +
+          (parseFloat(note.lain_3) || 0) +
+          (parseFloat(note.lain_4) || 0) 
+        );
       }, 0);
-    }
+    },
   },
   methods: {
     addNote() {
@@ -269,8 +352,14 @@ export default {
         formattedStnkResmi: "Rp. 0",
         jasa: 0,
         formattedJasa: "Rp. 0",
-        lain_lain: 0,
-        formattedLainLain: "Rp. 0",
+        lain_1: 0,
+        formattedLain1: "Rp. 0",
+        lain_2: 0,
+        formattedLain2: "Rp. 0",
+        lain_3: 0,
+        formattedLain3: "Rp. 0",
+        lain_4: 0,
+        formattedLain4: "Rp. 0",
         total: 0,
       });
     },
@@ -282,19 +371,26 @@ export default {
       this.$emit("save-notes", { header: this.header, notes: this.notes });
     },
     updateCurrency(note, field, event) {
-      // Hapus format rupiah dari input dan konversi kembali menjadi angka asli
-      let value = event.target.value.replace(/\D/g, ""); // Menghapus semua karakter non-digit
-      note[field] = parseInt(value) || 0; // Menyimpan angka asli
+  let value = event.target.value.replace(/\D/g, ""); 
+  note[field] = parseInt(value) || 0;
 
-      // Update format tampilan dalam rupiah
-      if (field === "stnk_resmi") {
-        note.formattedStnkResmi = this.formatCurrency(note.stnk_resmi);
-      } else if (field === "jasa") {
-        note.formattedJasa = this.formatCurrency(note.jasa);
-      } else if (field === "lain_lain") {
-        note.formattedLainLain = this.formatCurrency(note.lain_lain);
-      }
-    },
+  if (field === "stnk_resmi") {
+    note.formattedStnkResmi = this.formatCurrency(note.stnk_resmi);
+  } else if (field === "jasa") {
+    note.formattedJasa = this.formatCurrency(note.jasa);
+  } else if (field === "lain_lain") {
+    note.formattedLainLain = this.formatCurrency(note.lain_lain);
+  } else if (field === "lain_1") {
+    note.formattedLain1 = this.formatCurrency(note.lain_1);
+  } else if (field === "lain_2") {
+    note.formattedLain2 = this.formatCurrency(note.lain_2);
+  } else if (field === "lain_3") {
+    note.formattedLain3 = this.formatCurrency(note.lain_3);
+  } else if (field === "lain_4") {
+    note.formattedLain4 = this.formatCurrency(note.lain_4);
+  }
+},
+
     formatCurrency(value) {
       let val = (value / 1).toFixed(0).replace(",", ".");
       return "Rp. " + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
