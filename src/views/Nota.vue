@@ -66,18 +66,22 @@ const toggleSidebar = () => {
                       >
                         <i class="bi bi-info"></i>
                       </button>
-
-                      <router-link
+                      <button class="btn btn-secondary" @click="goToPrint(item.id)">
+                      <!-- <router-link
                         v-if="detailNota && detailNota.id"
                         :to="{
                           path: '/print',
                           query: { id: parseInt(detailNota.id), index: 1 },
                         }"
+                        
                       >
-                        <div class="btn btn-secondary">
-                          <i class="bi bi-printer-fill"></i>
+                        <div >
                         </div>
-                      </router-link>
+                      </router-link> -->
+                          <i class="bi bi-printer-fill"></i>
+
+                      </button>
+
                       <button
                         type="button"
                         class="btn btn-danger"
@@ -763,6 +767,9 @@ export default {
       }
       // Pemformatan angka dengan pemisah ribuan
       return numericValue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    goToPrint(idNota) {
+      this.$router.push({ name: "print", query: { id: parseInt(idNota), index: 1 } });
     },
   },
   created() {
