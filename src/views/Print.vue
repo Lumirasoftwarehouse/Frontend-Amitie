@@ -31,11 +31,26 @@
             </div>
             <div class="col-1"></div>
           </div>
+          <div class="row mb-2">
+            <div class="col-8"></div>
+            <div class="col-4">
+              <select class="form-select" aria-label="Default select example" v-model="selectedIndex">
+                <option selected value="0">Pilih halaman</option>
+                <option
+                  v-for="(index, i) in totalHalaman"
+                  :key="i"
+                  :value="i"
+                >
+                  Halaman {{ i + 1 }}
+                </option>
+              </select>
+            </div>
+          </div>
           <div id="element-to-convert">
             <div class="text-black bg-white">
               <!-- Detail Nota -->
               <div v-if="note.length > 0">
-                <div v-for="(item, index) in note" :key="index">
+                <div>
                   <div class="row border border-dark p-3 mb-3">
                     <div class="col-6">
                       <div class="row">
@@ -62,64 +77,82 @@
                         </div>
                       </div>
                     </div>
-                    <h4 class="text-center mt-3">Receipt {{ index + 1 }}</h4>
+                    <h4 class="text-center mt-3">Receipt {{selectedIndex +1}}</h4>
                     <div class="row">
                       <div class="col-6 border border-dark p-3 mb-3">
                         <div class="row">
                           <div class="col-4"><strong>Proses</strong></div>
-                          <div class="col-8">: {{ item.proses }}</div>
+                          <div class="col-8">: {{ note[selectedIndex].proses }}</div>
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>Atas Nama</strong></div>
-                          <div class="col-8">: {{ item.atas_nama }}</div>
+                          <div class="col-8">: {{ note[selectedIndex].atas_nama }}</div>
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>Kendaraan</strong></div>
-                          <div class="col-8">: {{ item.kendaraan }}</div>
+                          <div class="col-8">: {{ note[selectedIndex].kendaraan }}</div>
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>No Polisi</strong></div>
-                          <div class="col-8">: {{ item.no_polisi }}</div>
+                          <div class="col-8">: {{ note[selectedIndex].no_polisi }}</div>
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>Keterangan</strong></div>
-                          <div class="col-8">:<span v-html="formatKeterangan(item.keterangan)"></span></div>
+                          <div class="col-8">
+                            :<span
+                              v-html="formatKeterangan(note[selectedIndex].keterangan)"
+                            ></span>
+                          </div>
                         </div>
                       </div>
                       <div class="col-6 border border-dark p-3 mb-3">
                         <div class="row">
                           <div class="col-4"><strong>STNK Resmi</strong></div>
-                          <div class="col-8">: {{ formatCurrency(item.stnk_resmi) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(note[selectedIndex].stnk_resmi) }}
+                          </div>
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>Jasa</strong></div>
-                          <div class="col-8">: {{ formatCurrency(item.jasa) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(note[selectedIndex].jasa) }}
+                          </div>
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>Lain-lain</strong></div>
-                          <div class="col-8">: {{ formatCurrency(item.lain_1) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(note[selectedIndex].lain_1) }}
+                          </div>
                         </div>
                         <div class="row">
                           <div class="col-4"></div>
-                          <div class="col-8">: {{ formatCurrency(item.lain_2) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(note[selectedIndex].lain_2) }}
+                          </div>
                         </div>
                         <div class="row">
                           <div class="col-4"></div>
-                          <div class="col-8">: {{ formatCurrency(item.lain_3) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(note[selectedIndex].lain_3) }}
+                          </div>
                         </div>
                         <div class="row">
                           <div class="col-4"></div>
-                          <div class="col-8">: {{ formatCurrency(item.lain_4) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(note[selectedIndex].lain_4) }}
+                          </div>
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>Total</strong></div>
-                          <div class="col-8">: {{ formatCurrency(item.total) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(note[selectedIndex].total) }}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <h5 class="text-end">
+                <h5 class="text-end" v-if="totalHalaman-1 == selectedIndex">
                   Jumlah Keseluruhan: {{ formatCurrency(grandTotal) }}
                 </h5>
               </div>
@@ -176,6 +209,8 @@ export default {
       pelanggan: "",
       now: {},
       load: true,
+      totalHalaman: 0,
+      selectedIndex: 0
     };
   },
   computed: {
@@ -184,9 +219,9 @@ export default {
     },
   },
   methods: {
-  formatKeterangan(keterangan) {
+    formatKeterangan(keterangan) {
       // Ganti semua newline (\n) dengan <br> untuk membuat baris baru
-      return keterangan ? keterangan.replace(/\n/g, '<br> ') : '';
+      return keterangan ? keterangan.replace(/\n/g, "<br> ") : "";
     },
     getCurrentDateTime() {
       const date = new Date();
@@ -208,6 +243,7 @@ export default {
           `${import.meta.env.VITE_API_ENDPOINT}/nota/detail/${this.id}`
         );
         this.note = response.data.data.notes;
+        this.totalHalaman = this.note.length;
         this.alamat = response.data.data.alamat;
         this.tanggal = response.data.data.tanggal;
         this.pelanggan = response.data.data.nama_pelanggan;
