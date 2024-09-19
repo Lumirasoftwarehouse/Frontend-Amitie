@@ -83,7 +83,7 @@
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>Keterangan</strong></div>
-                          <div class="col-8">: {{ item.keterangan }}</div>
+                          <div class="col-8">:<span v-html="formatKeterangan(item.keterangan)"></span></div>
                         </div>
                       </div>
                       <div class="col-6 border border-dark p-3 mb-3">
@@ -184,6 +184,10 @@ export default {
     },
   },
   methods: {
+  formatKeterangan(keterangan) {
+      // Ganti semua newline (\n) dengan <br> untuk membuat baris baru
+      return keterangan ? keterangan.replace(/\n/g, '<br> ') : '';
+    },
     getCurrentDateTime() {
       const date = new Date();
       const day = String(date.getDate()).padStart(2, "0");
