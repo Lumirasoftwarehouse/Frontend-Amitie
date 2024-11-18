@@ -245,8 +245,8 @@ export default {
   },
   created() {
     if (this.index == 1) {
-      window.location.href = `http://localhost:5173/print?id=${this.id}`;
-      //window.location.href = `https://amitie.lumirainternational.com/print?id=${this.id}`;
+      // window.location.href = `http://localhost:5173/print?id=${this.id}`;
+      window.location.href = `https://amitie.lumirainternational.com/print?id=${this.id}`;
     }
     // this.idNota = this.$route.query.id;
     this.getCurrentDateTime();
