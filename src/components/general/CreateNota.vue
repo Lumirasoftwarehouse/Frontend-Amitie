@@ -33,7 +33,7 @@ import BiayaLain from "./BiayaLain.vue";
                 v-model="header.alamat"
                 type="text"
                 class="form-control"
-                placeholder="Alamat"
+                placeholder="masukkan alamat"
               />
             </div>
             <div class="col-sm-4">
@@ -48,7 +48,7 @@ import BiayaLain from "./BiayaLain.vue";
                 v-model="header.pelanggan"
                 type="text"
                 class="form-control"
-                placeholder="Nama Customer"
+                placeholder="masukkan nama pelanggan"
               />
             </div>
           </div>
@@ -99,7 +99,7 @@ import BiayaLain from "./BiayaLain.vue";
                           v-model="note.proses"
                           type="text"
                           class="form-control"
-                          placeholder="Proses"
+                          placeholder="masukkan jenis proses"
                         />
                       </div>
                     </div>
@@ -113,7 +113,7 @@ import BiayaLain from "./BiayaLain.vue";
                           v-model="note.atas_nama"
                           type="text"
                           class="form-control"
-                          placeholder="Atas Nama"
+                          placeholder="masukkan atas nama"
                         />
                       </div>
                     </div>
@@ -127,7 +127,7 @@ import BiayaLain from "./BiayaLain.vue";
                           v-model="note.kendaraan"
                           type="text"
                           class="form-control"
-                          placeholder="Kendaraan"
+                          placeholder="masukkan jenis kendaraan"
                         />
                       </div>
                     </div>
@@ -141,7 +141,7 @@ import BiayaLain from "./BiayaLain.vue";
                           v-model="note.no_polisi"
                           type="text"
                           class="form-control"
-                          placeholder="No Polisi"
+                          placeholder="masukkan nomor polisi"
                         />
                       </div>
                     </div>
@@ -154,7 +154,7 @@ import BiayaLain from "./BiayaLain.vue";
                         <textarea
                           v-model="note.keterangan"
                           class="form-control"
-                          placeholder="Keterangan"
+                          placeholder="masukkan keterangan"
                           rows="5"
                         ></textarea>
                       </div>
