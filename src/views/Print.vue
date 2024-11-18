@@ -95,7 +95,14 @@
                           <div class="col-4"><strong>Jasa</strong></div>
                           <div class="col-8">: {{ formatCurrency(item.jasa) }}</div>
                         </div>
-                        <div class="row">
+                        <strong>Biaya Lain</strong>
+                        <div v-for="lain in item.biaya_lain" :key="lain.id">
+                          <div class="row">
+                            <div class="col-4">{{lain.label}}</div>
+                            <div class="col-8">: {{ formatCurrency(lain.nominal) }}</div>
+                          </div>
+                        </div>
+                        <!-- <div class="row">
                           <div class="col-4"><strong>Lain-lain</strong></div>
                           <div class="col-8">: {{ formatCurrency(item.lain_1) }}</div>
                         </div>
@@ -110,7 +117,7 @@
                         <div class="row">
                           <div class="col-4"></div>
                           <div class="col-8">: {{ formatCurrency(item.lain_4) }}</div>
-                        </div>
+                        </div> -->
                         <div class="row">
                           <div class="col-4"><strong>Total</strong></div>
                           <div class="col-8">: {{ formatCurrency(item.total) }}</div>
@@ -238,8 +245,8 @@ export default {
   },
   created() {
     if (this.index == 1) {
-      // window.location.href = `http://localhost:5173/print?id=${this.id}`;
-      window.location.href = `https://amitie.lumirainternational.com/print?id=${this.id}`;
+      window.location.href = `http://localhost:5173/print?id=${this.id}`;
+      //window.location.href = `https://amitie.lumirainternational.com/print?id=${this.id}`;
     }
     // this.idNota = this.$route.query.id;
     this.getCurrentDateTime();

@@ -1,3 +1,7 @@
+<script setup>
+import BiayaLain from "./BiayaLain.vue";
+</script>
+
 <template>
   <div
     class="modal fade"
@@ -174,9 +178,7 @@
                     </div>
 
                     <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label"
-                        >Jasa</label
-                      >
+                      <label class="col-md-4 col-12 col-form-label">Jasa</label>
                       <div class="col-md-8 col-12">
                         <input
                           v-model="note.formattedJasa"
@@ -188,59 +190,9 @@
                       </div>
                     </div>
 
-                    <div class="form-group row">
-                      <label class="col-md-4 col-12 col-form-label"
-                        >Lain-lain</label
-                      >
-                      <div class="col-md-8 col-12">
-                        <input
-                          v-model="note.formattedLain1"
-                          @input="updateCurrency(note, 'lain_1', $event)"
-                          type="text"
-                          class="form-control"
-                          placeholder="Harga Lain-lain 1"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="form-group row" v-if="note.lain_1!=0">
-                      <label class="col-md-4 col-12 col-form-label"></label>
-                      <div class="col-md-8 col-12 float-end">
-                        <input
-                          v-model="note.formattedLain2"
-                          @input="updateCurrency(note, 'lain_2', $event)"
-                          type="text"
-                          class="form-control"
-                          placeholder="Harga Lain-lain 2"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="form-group row" v-if="note.lain_2!=0">
-                      <label class="col-md-4 col-12 col-form-label"></label>
-                      <div class="col-md-8 col-12">
-                        <input
-                          v-model="note.formattedLain3"
-                          @input="updateCurrency(note, 'lain_3', $event)"
-                          type="text"
-                          class="form-control"
-                          placeholder="Harga Lain-lain 3"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="form-group row" v-if="note.lain_3!=0">
-                      <label class="col-md-4 col-12 col-form-label"></label>
-                      <div class="col-md-8 col-12">
-                        <input
-                          v-model="note.formattedLain4"
-                          @input="updateCurrency(note, 'lain_4', $event)"
-                          type="text"
-                          class="form-control"
-                          placeholder="Harga Lain-lain 4"
-                        />
-                      </div>
-                    </div>
+                    <!-- Komponen TambahBiayaLain -->
+                     <BiayaLain :index="index" @update-biaya="updateBiaya" />
+                    <!-- <BiayaLain @update-biaya="updateBiaya" /> -->
 
                     <div class="form-group row">
                       <label class="col-md-4 col-12 col-form-label"
@@ -251,11 +203,7 @@
                           type="text"
                           class="form-control"
                           placeholder="Total"
-                          :value="
-                            formatCurrency(
-                              note.stnk_resmi + note.jasa + note.lain_1 + note.lain_2 + note.lain_3 + note.lain_4 
-                            )
-                          "
+                          :value="formatCurrency(note.stnk_resmi + note.jasa + note.biayaLain.reduce((sum, biaya) => sum + biaya.nominal, 0))"
                           readonly
                         />
                       </div>
@@ -308,20 +256,12 @@ export default {
           stnk_resmi: 0,
           formattedStnkResmi: "Rp. 0",
           jasa: 0,
+          biayaLain: [],
           formattedJasa: "Rp. 0",
-          lain_lain: 0,
-          formattedLainLain: "Rp. 0",
-          lain_1: 0,
-          formattedLain1: "Rp. 0",
-          lain_2: 0,
-          formattedLain2: "Rp. 0",
-          lain_3: 0,
-          formattedLain3: "Rp. 0",
-          lain_4: 0,
-          formattedLain4: "Rp. 0",
           total: 0,
         },
       ],
+      biayaLain: [],
     };
   },
 
@@ -332,15 +272,17 @@ export default {
           sum +
           (parseFloat(note.stnk_resmi) || 0) +
           (parseFloat(note.jasa) || 0) +
-          (parseFloat(note.lain_1) || 0) +
-          (parseFloat(note.lain_2) || 0) +
-          (parseFloat(note.lain_3) || 0) +
-          (parseFloat(note.lain_4) || 0) 
+          note.biayaLain.reduce((biayaSum, biaya) => biayaSum + biaya.nominal, 0)
         );
       }, 0);
     },
   },
   methods: {
+    updateBiaya({ index, biayaList }) {
+      // Perbarui 'biayaLain' untuk note yang relevan
+this.notes[index].biayaLain = biayaList;
+      console.log(`Updated Biaya for note ${index}:`, biayaList);
+    },
     addNote() {
       this.notes.push({
         proses: "",
@@ -352,14 +294,7 @@ export default {
         formattedStnkResmi: "Rp. 0",
         jasa: 0,
         formattedJasa: "Rp. 0",
-        lain_1: 0,
-        formattedLain1: "Rp. 0",
-        lain_2: 0,
-        formattedLain2: "Rp. 0",
-        lain_3: 0,
-        formattedLain3: "Rp. 0",
-        lain_4: 0,
-        formattedLain4: "Rp. 0",
+        biayaLain: [],
         total: 0,
       });
     },
@@ -371,25 +306,15 @@ export default {
       this.$emit("save-notes", { header: this.header, notes: this.notes });
     },
     updateCurrency(note, field, event) {
-  let value = event.target.value.replace(/\D/g, ""); 
-  note[field] = parseInt(value) || 0;
+      let value = event.target.value.replace(/\D/g, "");
+      note[field] = parseInt(value) || 0;
 
-  if (field === "stnk_resmi") {
-    note.formattedStnkResmi = this.formatCurrency(note.stnk_resmi);
-  } else if (field === "jasa") {
-    note.formattedJasa = this.formatCurrency(note.jasa);
-  } else if (field === "lain_lain") {
-    note.formattedLainLain = this.formatCurrency(note.lain_lain);
-  } else if (field === "lain_1") {
-    note.formattedLain1 = this.formatCurrency(note.lain_1);
-  } else if (field === "lain_2") {
-    note.formattedLain2 = this.formatCurrency(note.lain_2);
-  } else if (field === "lain_3") {
-    note.formattedLain3 = this.formatCurrency(note.lain_3);
-  } else if (field === "lain_4") {
-    note.formattedLain4 = this.formatCurrency(note.lain_4);
-  }
-},
+      if (field === "stnk_resmi") {
+        note.formattedStnkResmi = this.formatCurrency(note.stnk_resmi);
+      } else if (field === "jasa") {
+        note.formattedJasa = this.formatCurrency(note.jasa);
+      }
+    },
 
     formatCurrency(value) {
       let val = (value / 1).toFixed(0).replace(",", ".");

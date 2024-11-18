@@ -612,22 +612,17 @@ export default {
         keterangan: note.keterangan || "Keterangan tidak diisi", // Mengisi dengan nilai default jika kosong
         stnk_resmi: note.stnk_resmi || 0, // Mengisi dengan 0 jika kosong
         jasa: note.jasa || 0, // Mengisi dengan 0 jika kosong
-        lain_1: note.lain_1 || 0, // Mengisi dengan 0 jika kosong
-        lain_2: note.lain_2 || 0, // Mengisi dengan 0 jika kosong
-        lain_3: note.lain_3 || 0, // Mengisi dengan 0 jika kosong
-        lain_4: note.lain_4 || 0, // Mengisi dengan 0 jika kosong
+        biaya_lain: note.biayaLain || 0, // Mengisi dengan 0 jika kosong
         total:
           note.stnk_resmi +
           note.jasa +
-          note.lain_1 +
-          note.lain_2 +
-          note.lain_3 +
-          note.lain_4,
+          note.biayaLain.reduce((sum, biaya) => sum + biaya.nominal, 0),
       }));
 
       try {
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/nota/create`,
+          `${import.meta.env.VITE_API_ENDPOINT}/create-new`,
+          // `${import.meta.env.VITE_API_ENDPOINT}/nota/create`,
           { notes: formattedNotes, header: header }, // Kirimkan array notes dengan format yang benar
           {
             headers: {
