@@ -37,31 +37,42 @@
               <div v-if="note.length > 0">
                 <div v-for="(item, index) in note" :key="index">
                   <div class="row border border-dark mb-3">
-                    <div class="col-5">
-                      <div class="row">
-                        <div class="col-4">
-                          <img src="/img/amitie.jpg" alt="logo" width="80" />
-                        </div>
-                        <div class="col-8">
-                          <h6 class="text-center">Biro Jasa</h6>
-                          <h5 class="fw-bold text-center">"AMITIE"</h5>
-                        </div>
+                    <div class="row border border-dark">
+                      <div class="col-6">
+                        <h3 class="fw-bold text-center mt-4">INVOICE</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="row">
+                          <div class="col-8">
+                            <h6 class="text-center">Biro Jasa</h6>
+                            <h5 class="fw-bold text-center">"AMITIE"</h5>
+                            
+                          </div>
+                          <div class="col-4">
+                            <img src="/img/amitie.jpg" alt="logo" width="80" />
+                          </div>
                           <span style="font-size: 10px"
-                            >Jl. Bidara Raya No. 9 RT.02 RW.04 Jembatan Dua,
-                            Jakarta Utara Telp. 021-6620191, 021-6625312</span
-                          >
-                      </div>
-                    </div>
-                    <div class="col-7">
-                      <div class="row mt-5">
-                        <div class="col-6">
-                          <p>{{ alamat + ", " + tanggal }}</p>
-                        </div>
-                        <div class="col-6">
-                          <p>{{ pelanggan }}</p>
+                          >Jl. Bidara Raya No. 9 RT.02 RW.04 Jembatan Dua,
+                          Jakarta Utara Telp. 021-6620191, 021-6625312</span
+                        >
                         </div>
                       </div>
                     </div>
+                  
+
+                    <div class="row ms-2 mt-3">
+                      <div class="col-9">
+                        <h5>Kepada:</h5>
+                        <h5>{{ alamat }}</h5>
+                        <h5>{{ pelanggan }}</h5>
+
+                      </div>
+                      <div class="col-3">
+                        <h6 class="">Tanggal:</h6>
+                        <h6 class="">{{ tanggal }}</h6>
+                      </div>
+                    </div>
+                    
                     <h4 class="text-center mt-3">Receipt {{ index + 1 }}</h4>
                     <div class="row">
                       <div class="col-6 border border-dark p-3 mb-3">
@@ -83,23 +94,33 @@
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>Keterangan</strong></div>
-                          <div class="col-8">:<span v-html="formatKeterangan(item.keterangan)"></span></div>
+                          <div class="col-8">
+                            :<span
+                              v-html="formatKeterangan(item.keterangan)"
+                            ></span>
+                          </div>
                         </div>
                       </div>
                       <div class="col-6 border border-dark p-3 mb-3">
                         <div class="row">
                           <div class="col-4"><strong>STNK Resmi</strong></div>
-                          <div class="col-8">: {{ formatCurrency(item.stnk_resmi) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(item.stnk_resmi) }}
+                          </div>
                         </div>
                         <div class="row">
                           <div class="col-4"><strong>Jasa</strong></div>
-                          <div class="col-8">: {{ formatCurrency(item.jasa) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(item.jasa) }}
+                          </div>
                         </div>
                         <strong>Biaya Lain</strong>
                         <div v-for="lain in item.biaya_lain" :key="lain.id">
                           <div class="row">
-                            <div class="col-4">{{lain.label}}</div>
-                            <div class="col-8">: {{ formatCurrency(lain.nominal) }}</div>
+                            <div class="col-4">{{ lain.label }}</div>
+                            <div class="col-8">
+                              : {{ formatCurrency(lain.nominal) }}
+                            </div>
                           </div>
                         </div>
                         <!-- <div class="row">
@@ -120,24 +141,27 @@
                         </div> -->
                         <div class="row">
                           <div class="col-4"><strong>Total</strong></div>
-                          <div class="col-8">: {{ formatCurrency(item.total) }}</div>
+                          <div class="col-8">
+                            : {{ formatCurrency(item.total) }}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                <h5 class="text-end" v-if="note.length -1 == index">
-                  Jumlah Keseluruhan: {{ formatCurrency(grandTotal) }}
-                </h5>
-                  <br><br><br><br><br><br>
-              <!-- Keterangan Cetak -->
-              <div class="row mt-2" v-if="note.length -1 == index">
-                <small
-                  >Dokument ini dicetak pada: {{ now.date }}
-                  {{ now.time }}</small
-                >
-              </div>
-                  <br><br><br><br><br><br>
-                  <br><br><br><br><br><br><br>
+                  <h5 class="text-end" v-if="note.length - 1 == index">
+                    Jumlah Keseluruhan: {{ formatCurrency(grandTotal) }}
+                  </h5>
+                  <br /><br /><br /><br /><br /><br />
+                  <!-- Keterangan Cetak -->
+                  <div class="row mt-2" v-if="note.length - 1 == index">
+                    <small
+                      >Dokument ini dicetak pada: {{ now.date }}
+                      {{ now.time }}</small
+                    >
+                  </div>
+                  <br /><br /><br /><br /><br /><br />
+                  <br /><br /><br /><br /><br /><br /><br />
+                  <br><br><br>
                 </div>
               </div>
             </div>
@@ -194,9 +218,9 @@ export default {
     },
   },
   methods: {
-  formatKeterangan(keterangan) {
+    formatKeterangan(keterangan) {
       // Ganti semua newline (\n) dengan <br> untuk membuat baris baru
-      return keterangan ? keterangan.replace(/\n/g, '<br> ') : '';
+      return keterangan ? keterangan.replace(/\n/g, "<br> ") : "";
     },
     getCurrentDateTime() {
       const date = new Date();
@@ -245,8 +269,8 @@ export default {
   },
   created() {
     if (this.index == 1) {
-      // window.location.href = `http://localhost:5173/print?id=${this.id}`;
-      window.location.href = `https://amitie.lumirainternational.com/print?id=${this.id}`;
+      window.location.href = `http://localhost:5173/print?id=${this.id}`;
+      //window.location.href = `https://amitie.lumirainternational.com/print?id=${this.id}`;
     }
     // this.idNota = this.$route.query.id;
     this.getCurrentDateTime();
