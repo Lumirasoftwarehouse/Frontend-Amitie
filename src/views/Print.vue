@@ -36,8 +36,8 @@
               <!-- Detail Nota -->
               <div v-if="note.length > 0">
                 <div v-for="(item, index) in note" :key="index">
-                  <div class="row border border-dark mb-3">
-                    <div class="row border border-dark">
+                  <div class="row mb-3">
+                    <div class="row">
                       <div class="col-6">
                         <h3 class="fw-bold text-center mt-4">INVOICE</h3>
                       </div>
@@ -52,7 +52,10 @@
                             <img src="/img/amitie.jpg" alt="logo" width="80" />
                           </div>
                           <span style="font-size: 10px"
-                          >Jl. Bidara Raya No. 9 RT.02 RW.04 Jembatan Dua,
+                          >Jl. Bidara Raya No. 9 RT.02 RW.04 Jembatan Dua,</span
+                        >
+                          <span style="font-size: 10px"
+                          >
                           Jakarta Utara Telp. 021-6620191, 021-6625312</span
                         >
                         </div>
@@ -60,65 +63,65 @@
                     </div>
                   
 
-                    <div class="row ms-2 mt-3">
+                    <div class="row mt-5">
                       <div class="col-9">
-                        <h5>Kepada:</h5>
-                        <h5>{{ alamat }}</h5>
-                        <h5>{{ pelanggan }}</h5>
+                        <span style="font-size: 12px">Kepada:</span><br/>
+                        <span style="font-size: 12px">{{ pelanggan }}</span><br/>
+                        <span style="font-size: 12px">{{ alamat }}</span><br/>
 
                       </div>
                       <div class="col-3">
-                        <h6 class="">Tanggal:</h6>
-                        <h6 class="">{{ tanggal }}</h6>
+                        <span style="font-size: 12px">Tanggal:</span><br/>
+                        <span style="font-size: 12px">{{ tanggal }}</span><br/>
                       </div>
                     </div>
                     
-                    <h4 class="text-center mt-3">Receipt {{ index + 1 }}</h4>
+                    <span class="text-center mt-4 mb-3 fw-bold" style="font-size: 15px">Receipt {{ index + 1 }}</span>
                     <div class="row">
-                      <div class="col-6 border border-dark p-3 mb-3">
+                      <div class="col-6 mb-3">
                         <div class="row">
-                          <div class="col-4"><strong>Proses</strong></div>
-                          <div class="col-8">: {{ item.proses }}</div>
+                          <div class="col-4" style="font-size: 12px"><strong>Proses</strong></div>
+                          <div class="col-8" style="font-size: 12px">: {{ item.proses }}</div>
                         </div>
                         <div class="row">
-                          <div class="col-4"><strong>Atas Nama</strong></div>
-                          <div class="col-8">: {{ item.atas_nama }}</div>
+                          <div class="col-4" style="font-size: 12px"><strong>Atas Nama</strong></div>
+                          <div class="col-8" style="font-size: 12px">: {{ item.atas_nama }}</div>
                         </div>
                         <div class="row">
-                          <div class="col-4"><strong>Kendaraan</strong></div>
-                          <div class="col-8">: {{ item.kendaraan }}</div>
+                          <div class="col-4" style="font-size: 12px"><strong>Kendaraan</strong></div>
+                          <div class="col-8" style="font-size: 12px">: {{ item.kendaraan }}</div>
                         </div>
                         <div class="row">
-                          <div class="col-4"><strong>No Polisi</strong></div>
-                          <div class="col-8">: {{ item.no_polisi }}</div>
+                          <div class="col-4" style="font-size: 12px"><strong>No Polisi</strong></div>
+                          <div class="col-8" style="font-size: 12px">: {{ item.no_polisi }}</div>
                         </div>
                         <div class="row">
-                          <div class="col-4"><strong>Keterangan</strong></div>
-                          <div class="col-8">
+                          <div class="col-4" style="font-size: 12px"><strong>Keterangan</strong></div>
+                          <div class="col-8" style="font-size: 12px">
                             :<span
                               v-html="formatKeterangan(item.keterangan)"
                             ></span>
                           </div>
                         </div>
                       </div>
-                      <div class="col-6 border border-dark p-3 mb-3">
+                      <div class="col-6 mb-3">
                         <div class="row">
-                          <div class="col-4"><strong>STNK Resmi</strong></div>
-                          <div class="col-8">
+                          <div class="col-4" style="font-size: 12px"><strong>STNK Resmi</strong></div>
+                          <div class="col-8" style="font-size: 12px">
                             : {{ formatCurrency(item.stnk_resmi) }}
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-4"><strong>Jasa</strong></div>
-                          <div class="col-8">
+                          <div class="col-4" style="font-size: 12px"><strong>Jasa</strong></div>
+                          <div class="col-8" style="font-size: 12px">
                             : {{ formatCurrency(item.jasa) }}
                           </div>
                         </div>
-                        <strong>Biaya Lain</strong>
+                        <strong style="font-size: 12px">Biaya Lain</strong>
                         <div v-for="lain in item.biaya_lain" :key="lain.id">
                           <div class="row">
-                            <div class="col-4">{{ lain.label }}</div>
-                            <div class="col-8">
+                            <div class="col-4" style="font-size: 12px">{{ lain.label }}</div>
+                            <div class="col-8" style="font-size: 12px">
                               : {{ formatCurrency(lain.nominal) }}
                             </div>
                           </div>
@@ -140,8 +143,8 @@
                           <div class="col-8">: {{ formatCurrency(item.lain_4) }}</div>
                         </div> -->
                         <div class="row">
-                          <div class="col-4"><strong>Total</strong></div>
-                          <div class="col-8">
+                          <div class="col-4" style="font-size: 12px"><strong>Total</strong></div>
+                          <div class="col-8" style="font-size: 12px">
                             : {{ formatCurrency(item.total) }}
                           </div>
                         </div>
@@ -161,7 +164,7 @@
                   </div>
                   <br /><br /><br /><br /><br /><br />
                   <br /><br /><br /><br /><br /><br /><br />
-                  <br><br><br>
+                  <br><br>
                 </div>
               </div>
             </div>
