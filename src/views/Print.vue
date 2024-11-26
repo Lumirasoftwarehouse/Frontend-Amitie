@@ -32,71 +32,89 @@
             <div class="col-1"></div>
           </div>
           <div id="element-to-convert">
-            <div class="text-black bg-white">
+            <div class="container text-black bg-white">
               <!-- Detail Nota -->
               <div v-if="note.length > 0">
                 <div v-for="(item, index) in note" :key="index">
                   <div class="row mb-3">
-                    <div class="row">
-                      <div class="col-6">
-                        <h3 class="fw-bold text-center mt-4">INVOICE</h3>
-                      </div>
-                      <div class="col-6">
-                        <div class="row">
-                          <div class="col-8">
-                            <h6 class="text-center">Biro Jasa</h6>
-                            <h5 class="fw-bold text-center">"AMITIE"</h5>
-                            
-                          </div>
-                          <div class="col-4">
-                            <img src="/img/amitie.jpg" alt="logo" width="80" />
-                          </div>
-                          <span style="font-size: 10px"
-                          >Jl. Bidara Raya No. 9 RT.02 RW.04 Jembatan Dua,</span
-                        >
-                          <span style="font-size: 10px"
-                          >
+                    <div class="col-5">
+                      <div class="row">
+                        <div class="col-4">
+                          <img src="/img/amitie.jpg" alt="logo" width="80" />
+                        </div>
+                        <div class="col-8">
+                          <h6 class="text-center fw-bold">Biro Jasa</h6>
+                          <h5 class="fw-bold text-center">"AMITIE"</h5>
+                        </div>
+                        <span style="font-size: 10px"
+                          >Jl. Bidara Raya No. 9 RT.02 RW.04 Jembatan Dua,
                           Jakarta Utara Telp. 021-6620191, 021-6625312</span
                         >
+                      </div>
+                    </div>
+                    <div class="col-7">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="float-end" style="font-size: 12px">
+                            {{ alamat + ", " + formatTanggal(tanggal) }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col-4"></div>
+                        <div class="col-8 text-center">
+                          <span style="font-size: 12px">Kepada Yth.</span><br />
+                          <span style="font-size: 12px">{{ pelanggan }}</span>
                         </div>
                       </div>
                     </div>
-                  
-
-                    <div class="row mt-5">
-                      <div class="col-9">
-                        <span style="font-size: 12px">Kepada:</span><br/>
-                        <span style="font-size: 12px">{{ pelanggan }}</span><br/>
-                        <span style="font-size: 12px">{{ alamat }}</span><br/>
-
-                      </div>
-                      <div class="col-3">
-                        <span style="font-size: 12px">Tanggal:</span><br/>
-                        <span style="font-size: 12px">{{ tanggal }}</span><br/>
-                      </div>
-                    </div>
-                    
-                    <span class="text-center mt-4 mb-3 fw-bold" style="font-size: 15px">Receipt {{ index + 1 }}</span>
+                    <span
+                      class="text-center mt-3 fw-bold"
+                      style="font-size: 20px"
+                      >Receipt {{ index + 1 }}</span
+                    >
                     <div class="row">
-                      <div class="col-6 mb-3">
+                      <!-- <div class="col-1"></div> -->
+                      <div
+                        class="col-6 border border-dark"
+                        style="min-height: 200px"
+                      >
                         <div class="row">
-                          <div class="col-4" style="font-size: 12px"><strong>Proses</strong></div>
-                          <div class="col-8" style="font-size: 12px">: {{ item.proses }}</div>
+                          <div class="col-4" style="font-size: 12px">
+                            <strong>Proses</strong>
+                          </div>
+                          <div class="col-8" style="font-size: 12px">
+                            : {{ item.proses }}
+                          </div>
                         </div>
                         <div class="row">
-                          <div class="col-4" style="font-size: 12px"><strong>Atas Nama</strong></div>
-                          <div class="col-8" style="font-size: 12px">: {{ item.atas_nama }}</div>
+                          <div class="col-4" style="font-size: 12px">
+                            <strong>Atas Nama</strong>
+                          </div>
+                          <div class="col-8" style="font-size: 12px">
+                            : {{ item.atas_nama }}
+                          </div>
                         </div>
                         <div class="row">
-                          <div class="col-4" style="font-size: 12px"><strong>Kendaraan</strong></div>
-                          <div class="col-8" style="font-size: 12px">: {{ item.kendaraan }}</div>
+                          <div class="col-4" style="font-size: 12px">
+                            <strong>Kendaraan</strong>
+                          </div>
+                          <div class="col-8" style="font-size: 12px">
+                            : {{ item.kendaraan }}
+                          </div>
                         </div>
                         <div class="row">
-                          <div class="col-4" style="font-size: 12px"><strong>No Polisi</strong></div>
-                          <div class="col-8" style="font-size: 12px">: {{ item.no_polisi }}</div>
+                          <div class="col-4" style="font-size: 12px">
+                            <strong>No Polisi</strong>
+                          </div>
+                          <div class="col-8" style="font-size: 12px">
+                            : {{ item.no_polisi }}
+                          </div>
                         </div>
                         <div class="row">
-                          <div class="col-4" style="font-size: 12px"><strong>Keterangan</strong></div>
+                          <div class="col-4" style="font-size: 12px">
+                            <strong>Keterangan</strong>
+                          </div>
                           <div class="col-8" style="font-size: 12px">
                             :<span
                               v-html="formatKeterangan(item.keterangan)"
@@ -104,15 +122,22 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-6 mb-3">
+                      <div
+                        class="col-6 border border-dark"
+                        style="min-height: 200px"
+                      >
                         <div class="row">
-                          <div class="col-4" style="font-size: 12px"><strong>STNK Resmi</strong></div>
+                          <div class="col-4" style="font-size: 12px">
+                            <strong>STNK Resmi</strong>
+                          </div>
                           <div class="col-8" style="font-size: 12px">
                             : {{ formatCurrency(item.stnk_resmi) }}
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-4" style="font-size: 12px"><strong>Jasa</strong></div>
+                          <div class="col-4" style="font-size: 12px">
+                            <strong>Jasa</strong>
+                          </div>
                           <div class="col-8" style="font-size: 12px">
                             : {{ formatCurrency(item.jasa) }}
                           </div>
@@ -120,51 +145,65 @@
                         <strong style="font-size: 12px">Biaya Lain</strong>
                         <div v-for="lain in item.biaya_lain" :key="lain.id">
                           <div class="row">
-                            <div class="col-4" style="font-size: 12px">{{ lain.label }}</div>
+                            <div class="col-4" style="font-size: 12px">
+                              {{ lain.label }}
+                            </div>
                             <div class="col-8" style="font-size: 12px">
                               : {{ formatCurrency(lain.nominal) }}
                             </div>
                           </div>
                         </div>
-                        <!-- <div class="row">
-                          <div class="col-4"><strong>Lain-lain</strong></div>
-                          <div class="col-8">: {{ formatCurrency(item.lain_1) }}</div>
-                        </div>
+
                         <div class="row">
-                          <div class="col-4"></div>
-                          <div class="col-8">: {{ formatCurrency(item.lain_2) }}</div>
-                        </div>
-                        <div class="row">
-                          <div class="col-4"></div>
-                          <div class="col-8">: {{ formatCurrency(item.lain_3) }}</div>
-                        </div>
-                        <div class="row">
-                          <div class="col-4"></div>
-                          <div class="col-8">: {{ formatCurrency(item.lain_4) }}</div>
-                        </div> -->
-                        <div class="row">
-                          <div class="col-4" style="font-size: 12px"><strong>Total</strong></div>
+                          <div class="col-4" style="font-size: 12px">
+                            <strong>Total</strong>
+                          </div>
                           <div class="col-8" style="font-size: 12px">
                             : {{ formatCurrency(item.total) }}
                           </div>
                         </div>
                       </div>
+                      <!-- <div class="col-1"></div> -->
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-7 border border-dark">
+                        <span style="font-size: 12px"
+                          >Pembayaran Cheque/Giro/Transfer</span
+                        ><br />
+                        <span style="font-size: 12px"
+                          ><span class="text-danger"
+                            >No. Rek BCA: 311-113-1331</span
+                          >
+                          Cabang Latumenten</span
+                        ><br />
+                        <span class="text-danger" style="font-size: 12px"
+                          >A/N. MARTINEZ</span
+                        >
+                      </div>
+                      <div class="col-5"></div>
                     </div>
                   </div>
-                  <h5 class="text-end" v-if="note.length - 1 == index">
+                  <h5
+                    class="text-end"
+                    v-if="note.length - 1 == index"
+                    style="font-size: 12px"
+                  >
                     Jumlah Keseluruhan: {{ formatCurrency(grandTotal) }}
                   </h5>
-                  <br /><br /><br /><br /><br /><br />
+                  <br />
                   <!-- Keterangan Cetak -->
-                  <div class="row mt-2" v-if="note.length - 1 == index">
+                  <div
+                    class="row mt-2"
+                    v-if="note.length - 1 == index"
+                    style="font-size: 12px"
+                  >
                     <small
                       >Dokument ini dicetak pada: {{ now.date }}
                       {{ now.time }}</small
                     >
                   </div>
-                  <br /><br /><br /><br /><br /><br />
-                  <br /><br /><br /><br /><br /><br /><br />
-                  <br><br>
+                  <br />
+                  <br />
                 </div>
               </div>
             </div>
@@ -221,6 +260,24 @@ export default {
     },
   },
   methods: {
+    formatTanggal(dateString) {
+      const bulan = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ];
+      const [year, month, day] = dateString.split("-");
+      return `${parseInt(day)} ${bulan[parseInt(month) - 1]} ${year}`;
+    },
     formatKeterangan(keterangan) {
       // Ganti semua newline (\n) dengan <br> untuk membuat baris baru
       return keterangan ? keterangan.replace(/\n/g, "<br> ") : "";
@@ -255,11 +312,11 @@ export default {
     exportToPDF() {
       const element = document.getElementById("element-to-convert");
       const opt = {
-        margin: 1,
+        margin: 0.5,
         filename: `nota_${this.pelanggan}_${this.tanggal}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+        jsPDF: { unit: "in", format: [8.27, 6.53], orientation: "landscape" },
       };
       html2pdf().from(element).set(opt).save();
     },
