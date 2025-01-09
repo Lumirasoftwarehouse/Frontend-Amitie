@@ -602,7 +602,7 @@ export default {
 
       // Pastikan setiap note memiliki field yang dibutuhkan dan valid
       const formattedNotes = notes.map((note) => ({
-        alamat: note.alamat || "Alamat tidak diisi", // Mengisi dengan nilai default jika kosong
+        // alamat: note.alamat || "Alamat tidak diisi", // Mengisi dengan nilai default jika kosong
         tanggal: note.tanggal || new Date().toISOString().slice(0, 10), // Menggunakan tanggal saat ini jika kosong
         pelanggan: note.pelanggan || "Pelanggan tidak diisi", // Mengisi dengan nilai default jika kosong
         proses: note.proses || "Proses tidak diisi", // Mengisi dengan nilai default jika kosong

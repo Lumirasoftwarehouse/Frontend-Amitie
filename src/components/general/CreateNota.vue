@@ -29,12 +29,12 @@ import BiayaLain from "./BiayaLain.vue";
           <!-- Header Section -->
           <div class="row">
             <div class="col-sm-4">
-              <input
+              <!-- <input
                 v-model="header.alamat"
                 type="text"
                 class="form-control"
                 placeholder="masukkan alamat"
-              />
+              /> -->
             </div>
             <div class="col-sm-4">
               <input
@@ -242,7 +242,7 @@ export default {
   data() {
     return {
       header: {
-        alamat: "",
+        // alamat: "",
         tanggal: "",
         pelanggan: "",
       },
