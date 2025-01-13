@@ -65,15 +65,16 @@
                     </div>
                     <div class="col-7">
                       <div class="row">
-                        <div class="col-12">
-                          <p class="float-end pe-3" style="font-size: 12px">
+                        <div class="col-5"></div>
+                        <div class="col-7">
+                          <p class="" style="font-size: 12px">
                             {{ "Jakarta, " + formatTanggal(tanggal) }}
                           </p>
                         </div>
                       </div>
                       <div class="row mt-3">
-                        <div class="col-4"></div>
-                        <div class="col-8 text-center">
+                        <div class="col-5"></div>
+                        <div class="col-7">
                           <span style="font-size: 12px">Kepada Yth.</span><br />
                           <span style="font-size: 12px">{{ pelanggan }}</span>
                         </div>
@@ -136,7 +137,10 @@
                             Resmi STNK (Rp)
                           </div>
                           <div class="col-7" style="font-size: 12px">
-                            : {{ formatCurrency(item.stnk_resmi) }}
+                            :
+                            <div class="float-end">
+                              {{ formatCurrency(item.stnk_resmi) }}
+                            </div>
                           </div>
                         </div>
                         <div class="row">
@@ -144,7 +148,10 @@
                             Jasa (Rp)
                           </div>
                           <div class="col-7" style="font-size: 12px">
-                            : {{ formatCurrency(item.jasa) }}
+                            :
+                            <div class="float-end">
+                              {{ formatCurrency(item.jasa) }}
+                            </div>
                           </div>
                         </div>
                         <div style="font-size: 12px">Lain-lain (Rp.)</div>
@@ -154,7 +161,10 @@
                               {{ lain.label }}
                             </div>
                             <div class="col-7" style="font-size: 12px">
-                              : {{ formatCurrency(lain.nominal) }}
+                              :
+                              <div class="float-end">
+                                {{ formatCurrency(lain.nominal) }}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -164,7 +174,10 @@
                             <strong>Total (Rp.)</strong>
                           </div>
                           <div class="col-7" style="font-size: 12px">
-                            : {{ formatCurrency(item.total) }}
+                            :
+                            <div class="float-end">
+                              {{ formatCurrency(item.total) }}
+                            </div>
                           </div>
                         </div>
                       </div>
