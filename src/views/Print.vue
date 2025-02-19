@@ -198,13 +198,13 @@
                         >
                       </div>
                       <div class="col-7 text-center">
-                        <h5
+                        <!-- <h5
                           class="text-end"
                           v-if="note.length - 1 == index"
                           style="font-size: 12px"
                         >
                           Jumlah Keseluruhan: {{ formatCurrency(grandTotal) }}
-                        </h5>
+                        </h5> -->
                         <span style="font-size: 12px">Hormat Kami</span>
                       </div>
                     </div>
@@ -352,11 +352,23 @@ export default {
         });
     },
 
+    // formatCurrency(value) {
+    //   return new Intl.NumberFormat("id-ID", {
+    //     style: "currency",
+    //     currency: "IDR",
+    //   }).format(value);
+    // },
+
     formatCurrency(value) {
       return new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
-      }).format(value);
+        currencyDisplay: "code", // Menampilkan format dengan "IDR" yang akan kita hapus
+        minimumFractionDigits: 0, // Menghapus desimal jika tidak diperlukan
+      })
+        .format(value)
+        .replace("IDR", "")
+        .trim(); // Menghapus "IDR" dan spasi ekstra
     },
   },
   created() {
