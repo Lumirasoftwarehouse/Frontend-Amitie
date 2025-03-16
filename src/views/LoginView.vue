@@ -122,7 +122,13 @@ export default {
 
           const token = response.data.access_token;
           sessionStorage.setItem("token", token);
-            this.$router.push("/nota");
+
+          if (response.data.level === "0"){
+            this.$router.push("/stok");
+          }else{
+            this.$router.push("/pemesanan-ps");
+          }
+          
 
         })
         .catch((error) => {

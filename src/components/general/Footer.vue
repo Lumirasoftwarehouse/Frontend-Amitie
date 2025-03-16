@@ -1,9 +1,9 @@
 <template>
   <!-- Footer -->
-  <footer class="sticky-footer customNav bg-primary">
+  <footer class="sticky-footer customNav bg-primary fixed-bottom">
     <div class="container my-auto">
       <div class="copyright text-center my-auto">
-        <strong>Copyright &copy; Biro Jasa AMITIE 2024</strong>
+        <strong>Copyright &copy; Rental PS 2025</strong>
       </div>
     </div>
   </footer>

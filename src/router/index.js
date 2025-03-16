@@ -14,6 +14,21 @@ const router = createRouter({
       component: () => import('../views/Dashboard.vue')
     },    
     {
+      path: '/stok',
+      name: 'stok',
+      component: () => import('../views/Stok.vue')
+    },    
+    {
+      path: '/pemesanan',
+      name: 'pemesanan',
+      component: () => import('../views/Pemesanan.vue')
+    },    
+    {
+      path: '/pemesanan-ps',
+      name: 'pemesanan-ps',
+      component: () => import('../views/PemesananUser.vue')
+    },    
+    {
       path: '/nota',
       name: 'nota',
       component: () => import('../views/Nota.vue')

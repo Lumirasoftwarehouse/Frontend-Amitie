@@ -43,16 +43,15 @@
           class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
           aria-labelledby="userDropdown"
         >
-          <router-link
+          <!-- <router-link
             class="dropdown-item"
             to="/admin-profile"
             data-toggle="modal"
             data-target="#logoutModal"
           >
-            <!-- <i class="fa-solid fa-user"></i> -->
             <i class="fas fa-solid fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             Profil
-          </router-link>
+          </router-link> -->
           <a
             class="dropdown-item"
             href="#"
@@ -70,7 +69,7 @@
   <!-- End of Topbar -->
 </template>
 <script>
-
+import Swal from "sweetalert2";
 export default {
   // props: ["id"],
   props: {
@@ -100,7 +99,7 @@ export default {
         cancelButtonText: "Batal",
       }).then((result) => {
         if (result.isConfirmed) {
-        //   this.logout();
+            this.logout();
         }
       });
     },
@@ -116,37 +115,9 @@ export default {
         });
         return;
       }
-
-      axios
-        .post(`https://backend-sblf.lumirainternational.com/api/auth/logout`, null, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        })
-        .then((response) => {
-          Swal.fire({
-            title: `Logout berhasil!`,
-            icon: "success",
-            timer: 1500,
-            timerProgressBar: true,
-            showConfirmButton: false,
-          });
-
-          // Redirect ke halaman tertentu
-          sessionStorage.removeItem("token");
-          this.$router.push("/"); // or the desired redirect route
-        })
-        .catch((error) => {
-          console.error(error);
-
-          // Jika terjadi kesalahan, tampilkan pesan kesalahan menggunakan Swal.fire()
-          Swal.fire({
-            title: "Logout gagal",
-            text: "Terjadi kesalahan saat melakukan logout.",
-            icon: "error",
-            confirmButtonColor: "#d33",
-          });
-        });
+      // Redirect ke halaman tertentu
+      sessionStorage.removeItem("token");
+      this.$router.push("/"); // or the desired redirect route
     },
   },
   created() {},

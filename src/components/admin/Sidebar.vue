@@ -14,7 +14,7 @@
       <!-- <img src="/img/logo.png" alt="logo" width="50" /> -->
     </div>
     <div class="sidebar-brand-text ms-3">
-      <span class="text-primary">Biro Jasa AMITIE</span>
+      <span class="text-primary">Rental PS</span>
     </div>
   </a>
 
@@ -24,11 +24,22 @@
   <li class="nav-item">
     <router-link
       class="nav-link text-primary"
-      to="/nota"
+      to="/stok"
       active-class="font-weight-bold text-primary active-link"
     >
       <i class="bi bi-journal-text text-primary fw-bold"></i>
-      <span>Nota</span>
+      <span>Stok PS</span>
+    </router-link>
+  </li>
+
+  <li class="nav-item">
+    <router-link
+      class="nav-link text-primary"
+      to="/pemesanan"
+      active-class="font-weight-bold text-primary active-link"
+    >
+      <i class="bi bi-journal-text text-primary fw-bold"></i>
+      <span>Pemesanan</span>
     </router-link>
   </li>
 
